@@ -34,7 +34,7 @@ const LinePlot: FC<LinePlotProps> = ({
         fill="none"
         stroke="currentColor"
         strokeWidth="1.5"
-        d={line(data) || undefined}
+        d={line(data) ?? undefined}
       />
       <g fill="white" stroke="currentColor" strokeWidth="1.5">
         {data.map((d, i) => (
