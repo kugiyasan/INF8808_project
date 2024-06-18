@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import LinePlot from "./LinePlot/LinePlot";
 import * as d3 from "d3";
+import SpiderChart from "./SpiderChart/SpiderChart";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -43,6 +44,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
       <LinePlot data={[1, 5, 143, 76, 34, 87]} />
+      <SpiderChart />
     </>
   );
 }

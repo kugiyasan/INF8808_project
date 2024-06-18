@@ -1,3 +1,4 @@
+// @ts-nocheck
 // https://gist.github.com/nbremer/21746a9668ffdf6d8242
 /////////////////////////////////////////////////////////
 /////////////// The Radar Chart Function ////////////////
@@ -32,7 +33,7 @@ interface Options {
 }
 
 function RadarChart(
-  id: string,
+  id: HTMLDivElement | null,
   data: { axis: string; value: number }[][],
   options?: Partial<Options>,
 ) {
@@ -105,14 +106,14 @@ function RadarChart(
   /////////////////////////////////////////////////////////
 
   //Filter for the outside glow
-  const filter = g.append("defs").append("filter").attr("id", "glow"),
-    feGaussianBlur = filter
-      .append("feGaussianBlur")
-      .attr("stdDeviation", "2.5")
-      .attr("result", "coloredBlur"),
-    feMerge = filter.append("feMerge"),
-    feMergeNode_1 = feMerge.append("feMergeNode").attr("in", "coloredBlur"),
-    feMergeNode_2 = feMerge.append("feMergeNode").attr("in", "SourceGraphic");
+  const filter = g.append("defs").append("filter").attr("id", "glow");
+  filter
+    .append("feGaussianBlur")
+    .attr("stdDeviation", "2.5")
+    .attr("result", "coloredBlur");
+  const feMerge = filter.append("feMerge");
+  feMerge.append("feMergeNode").attr("in", "coloredBlur");
+  feMerge.append("feMergeNode").attr("in", "SourceGraphic");
 
   /////////////////////////////////////////////////////////
   /////////////// Draw the Circular grid //////////////////
@@ -128,7 +129,7 @@ function RadarChart(
     .enter()
     .append("circle")
     .attr("class", "gridCircle")
-    .attr("r", function (d, i) {
+    .attr("r", function (d) {
       return (radius / cfg.levels) * d;
     })
     .style("fill", "#CDCDCD")
@@ -150,7 +151,7 @@ function RadarChart(
     .attr("dy", "0.4em")
     .style("font-size", "10px")
     .attr("fill", "#737373")
-    .text(function (d, i) {
+    .text(function (d) {
       return Format((maxValue * d) / cfg.levels);
     });
 
@@ -235,14 +236,14 @@ function RadarChart(
   blobWrapper
     .append("path")
     .attr("class", "radarArea")
-    .attr("d", function (d, i) {
+    .attr("d", function (d) {
       return radarLine(d);
     })
     .style("fill", function (d, i) {
       return cfg.color(i);
     })
     .style("fill-opacity", cfg.opacityArea)
-    .on("mouseover", function (d, i) {
+    .on("mouseover", function () {
       //Dim all blobs
       d3.selectAll(".radarArea")
         .transition()
@@ -263,7 +264,7 @@ function RadarChart(
   blobWrapper
     .append("path")
     .attr("class", "radarStroke")
-    .attr("d", function (d, i) {
+    .attr("d", function (d) {
       return radarLine(d);
     })
     .style("stroke-width", cfg.strokeWidth + "px")
@@ -276,7 +277,7 @@ function RadarChart(
   //Append the circles
   blobWrapper
     .selectAll(".radarCircle")
-    .data(function (d, i) {
+    .data(function (d) {
       return d;
     })
     .enter()
@@ -294,18 +295,7 @@ function RadarChart(
     })
     .style("fill-opacity", 0.8);
 
-  drawInvisibleCircles(g, data, cfg, rScale, angleSlice, Format);
-}
-
-//Wrapper for the invisible circles on top
-function drawInvisibleCircles(
-  g: d3.Selection<SVGGElement, unknown, HTMLElement, any>,
-  data: { axis: string; value: number }[][],
-  cfg: Options,
-  rScale: d3.ScaleLinear<number, number, never>,
-  angleSlice: number,
-  Format: (n: number | { valueOf(): number }) => string,
-) {
+  // Wrapper for the invisible circles on top
   const blobCircleWrapper = g
     .selectAll(".radarCircleWrapper")
     .data(data)
@@ -316,7 +306,7 @@ function drawInvisibleCircles(
   //Append a set of invisible circles on top for the mouseover pop-up
   blobCircleWrapper
     .selectAll(".radarInvisibleCircle")
-    .data(function (d, i) {
+    .data(function (d) {
       return d;
     })
     .enter()
@@ -331,7 +321,7 @@ function drawInvisibleCircles(
     })
     .style("fill", "none")
     .style("pointer-events", "all")
-    .on("mouseover", function (d, i) {
+    .on("mouseover", function (d) {
       const newX = parseFloat(d3.select(this).attr("cx")) - 10;
       const newY = parseFloat(d3.select(this).attr("cy")) - 10;
 
@@ -353,7 +343,10 @@ function drawInvisibleCircles(
 
 //Taken from http://bl.ocks.org/mbostock/7555321
 //Wraps SVG text
-function wrap(text, width: number) {
+function wrap(
+  text: d3.Selection<SVGGElement, unknown, HTMLElement, any>,
+  width: number,
+) {
   text.each(function () {
     const text = d3.select(this);
     const words = text.text().split(/\s+/).reverse();
