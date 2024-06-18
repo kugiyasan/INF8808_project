@@ -1,11 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import LinePlot from "./LinePlot/LinePlot";
+import * as d3 from "d3";
 
 function App() {
   const [count, setCount] = useState(0);
+
+  const [dataset, setDataset] = useState<d3.DSVRowArray<string>>();
+
+  useEffect(() => {
+    d3.csv("/dataset.csv")
+      .then((df) => {
+        setDataset(df);
+      })
+      .catch(console.error);
+  }, []);
+
+  console.log(dataset === undefined ? undefined : dataset[0]);
 
   return (
     <>
