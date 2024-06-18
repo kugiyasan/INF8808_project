@@ -1,3 +1,4 @@
+// https://gist.github.com/nbremer/21746a9668ffdf6d8242
 /////////////////////////////////////////////////////////
 /////////////// The Radar Chart Function ////////////////
 /////////////// Written by Nadieh Bremer ////////////////
@@ -5,54 +6,73 @@
 /////////// Inspired by the code of alangrafu ///////////
 /////////////////////////////////////////////////////////
 
-function RadarChart(id, data, options) {
-  var cfg = {
-    w: 600, //Width of the circle
-    h: 600, //Height of the circle
-    margin: { top: 20, right: 20, bottom: 20, left: 20 }, //The margins of the SVG
-    levels: 3, //How many levels or inner circles should there be drawn
-    maxValue: 0, //What is the value that the biggest circle will represent
-    labelFactor: 1.25, //How much farther than the radius of the outer circle should the labels be placed
-    wrapWidth: 60, //The number of pixels after which a label needs to be given a new line
-    opacityArea: 0.35, //The opacity of the area of the blob
-    dotRadius: 4, //The size of the colored circles of each blog
-    opacityCircles: 0.1, //The opacity of the circles of each blob
-    strokeWidth: 2, //The width of the stroke around each blob
-    roundStrokes: false, //If true the area and stroke will follow a round path (cardinal-closed)
-    color: d3.scale.category10(), //Color function
+import * as d3 from "d3";
+
+interface Margin {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+interface Options {
+  w: number; //Width of the circle
+  h: number; //Height of the circle
+  margin: Margin; //The margins of the SVG
+  levels: number; //How many levels or inner circles should there be drawn
+  maxValue: number; //What is the value that the biggest circle will represent
+  labelFactor: number; //How much farther than the radius of the outer circle should the labels be placed
+  wrapWidth: number; //The number of pixels after which a label needs to be given a new line
+  opacityArea: number; //The opacity of the area of the blob
+  dotRadius: number; //The size of the colored circles of each blog
+  opacityCircles: number; //The opacity of the circles of each blob
+  strokeWidth: number; //The width of the stroke around each blob
+  roundStrokes: boolean; //If true the area and stroke will follow a round path (cardinal-closed)
+  color: d3.ScaleOrdinal<string, string>; //Color function
+}
+
+function RadarChart(
+  id: string,
+  data: { axis: string; value: number }[][],
+  options?: Partial<Options>,
+) {
+  const cfg: Options = {
+    w: 600,
+    h: 600,
+    margin: { top: 20, right: 20, bottom: 20, left: 20 },
+    levels: 3,
+    maxValue: 0,
+    labelFactor: 1.25,
+    wrapWidth: 60,
+    opacityArea: 0.35,
+    dotRadius: 4,
+    opacityCircles: 0.1,
+    strokeWidth: 2,
+    roundStrokes: false,
+    color: d3.scaleOrdinal(d3.schemeCategory10),
   };
 
   //Put all of the options into a variable called cfg
   if ("undefined" !== typeof options) {
-    for (var i in options) {
+    for (const i in options) {
       if ("undefined" !== typeof options[i]) {
         cfg[i] = options[i];
       }
-    } //for i
-  } //if
+    }
+  }
 
   //If the supplied maxValue is smaller than the actual one, replace by the max in the data
-  var maxValue = Math.max(
+  const maxValue = Math.max(
     cfg.maxValue,
-    d3.max(data, function (i) {
-      return d3.max(
-        i.map(function (o) {
-          return o.value;
-        }),
-      );
-    }),
+    d3.max(data, (i) => d3.max(i.map((o) => o.value))),
   );
 
-  var allAxis = data[0].map(function (i, j) {
-      return i.axis;
-    }), //Names of each axis
-    total = allAxis.length, //The number of different axes
-    radius = Math.min(cfg.w / 2, cfg.h / 2), //Radius of the outermost circle
-    Format = d3.format("%"), //Percentage formatting
-    angleSlice = (Math.PI * 2) / total; //The width in radians of each "slice"
+  const allAxis = data[0].map((i) => i.axis);
+  const radius = Math.min(cfg.w / 2, cfg.h / 2); //Radius of the outermost circle
+  const Format = d3.format("%"); //Percentage formatting
+  const angleSlice = (Math.PI * 2) / allAxis.length; //The width in radians of each "slice"
 
-  //Scale for the radius
-  var rScale = d3.scale.linear().range([0, radius]).domain([0, maxValue]);
+  const rScale = d3.scaleLinear().range([0, radius]).domain([0, maxValue]);
 
   /////////////////////////////////////////////////////////
   //////////// Create the container SVG and g /////////////
@@ -62,14 +82,14 @@ function RadarChart(id, data, options) {
   d3.select(id).select("svg").remove();
 
   //Initiate the radar chart SVG
-  var svg = d3
+  const svg = d3
     .select(id)
     .append("svg")
     .attr("width", cfg.w + cfg.margin.left + cfg.margin.right)
     .attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
     .attr("class", "radar" + id);
   //Append a g element
-  var g = svg
+  const g = svg
     .append("g")
     .attr(
       "transform",
@@ -85,7 +105,7 @@ function RadarChart(id, data, options) {
   /////////////////////////////////////////////////////////
 
   //Filter for the outside glow
-  var filter = g.append("defs").append("filter").attr("id", "glow"),
+  const filter = g.append("defs").append("filter").attr("id", "glow"),
     feGaussianBlur = filter
       .append("feGaussianBlur")
       .attr("stdDeviation", "2.5")
@@ -99,7 +119,7 @@ function RadarChart(id, data, options) {
   /////////////////////////////////////////////////////////
 
   //Wrapper for the grid & axes
-  var axisGrid = g.append("g").attr("class", "axisWrapper");
+  const axisGrid = g.append("g").attr("class", "axisWrapper");
 
   //Draw the background circles
   axisGrid
@@ -139,7 +159,7 @@ function RadarChart(id, data, options) {
   /////////////////////////////////////////////////////////
 
   //Create the straight lines radiating outward from the center
-  var axis = axisGrid
+  const axis = axisGrid
     .selectAll(".axis")
     .data(allAxis)
     .enter()
@@ -189,9 +209,9 @@ function RadarChart(id, data, options) {
   /////////////////////////////////////////////////////////
 
   //The radial line function
-  var radarLine = d3.svg.line
-    .radial()
-    .interpolate("linear-closed")
+  const radarLine = d3
+    .lineRadial()
+    .curve(d3.curveBasisClosed)
     .radius(function (d) {
       return rScale(d.value);
     })
@@ -200,11 +220,11 @@ function RadarChart(id, data, options) {
     });
 
   if (cfg.roundStrokes) {
-    radarLine.interpolate("cardinal-closed");
+    radarLine.curve(d3.curveCardinalClosed);
   }
 
   //Create a wrapper for the blobs
-  var blobWrapper = g
+  const blobWrapper = g
     .selectAll(".radarWrapper")
     .data(data)
     .enter()
@@ -274,12 +294,19 @@ function RadarChart(id, data, options) {
     })
     .style("fill-opacity", 0.8);
 
-  /////////////////////////////////////////////////////////
-  //////// Append invisible circles for tooltip ///////////
-  /////////////////////////////////////////////////////////
+  drawInvisibleCircles(g, data, cfg, rScale, angleSlice, Format);
+}
 
-  //Wrapper for the invisible circles on top
-  var blobCircleWrapper = g
+//Wrapper for the invisible circles on top
+function drawInvisibleCircles(
+  g: d3.Selection<SVGGElement, unknown, HTMLElement, any>,
+  data: { axis: string; value: number }[][],
+  cfg: Options,
+  rScale: d3.ScaleLinear<number, number, never>,
+  angleSlice: number,
+  Format: (n: number | { valueOf(): number }) => string,
+) {
+  const blobCircleWrapper = g
     .selectAll(".radarCircleWrapper")
     .data(data)
     .enter()
@@ -305,8 +332,8 @@ function RadarChart(id, data, options) {
     .style("fill", "none")
     .style("pointer-events", "all")
     .on("mouseover", function (d, i) {
-      newX = parseFloat(d3.select(this).attr("cx")) - 10;
-      newY = parseFloat(d3.select(this).attr("cy")) - 10;
+      const newX = parseFloat(d3.select(this).attr("cx")) - 10;
+      const newY = parseFloat(d3.select(this).attr("cy")) - 10;
 
       tooltip
         .attr("x", newX)
@@ -321,47 +348,45 @@ function RadarChart(id, data, options) {
     });
 
   //Set up the small tooltip for when you hover over a circle
-  var tooltip = g.append("text").attr("class", "tooltip").style("opacity", 0);
+  const tooltip = g.append("text").attr("class", "tooltip").style("opacity", 0);
+}
 
-  /////////////////////////////////////////////////////////
-  /////////////////// Helper Function /////////////////////
-  /////////////////////////////////////////////////////////
+//Taken from http://bl.ocks.org/mbostock/7555321
+//Wraps SVG text
+function wrap(text, width: number) {
+  text.each(function () {
+    const text = d3.select(this);
+    const words = text.text().split(/\s+/).reverse();
+    let word;
+    let line: string[] = [];
+    let lineNumber = 0;
+    const lineHeight = 1.4; // ems
+    const y = text.attr("y");
+    const x = text.attr("x");
+    const dy = parseFloat(text.attr("dy"));
+    let tspan = text
+      .text(null)
+      .append("tspan")
+      .attr("x", x)
+      .attr("y", y)
+      .attr("dy", dy + "em");
 
-  //Taken from http://bl.ocks.org/mbostock/7555321
-  //Wraps SVG text
-  function wrap(text, width) {
-    text.each(function () {
-      var text = d3.select(this),
-        words = text.text().split(/\s+/).reverse(),
-        word,
-        line = [],
-        lineNumber = 0,
-        lineHeight = 1.4, // ems
-        y = text.attr("y"),
-        x = text.attr("x"),
-        dy = parseFloat(text.attr("dy")),
+    while ((word = words.pop())) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
         tspan = text
-          .text(null)
           .append("tspan")
           .attr("x", x)
           .attr("y", y)
-          .attr("dy", dy + "em");
-
-      while ((word = words.pop())) {
-        line.push(word);
-        tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
-          line.pop();
-          tspan.text(line.join(" "));
-          line = [word];
-          tspan = text
-            .append("tspan")
-            .attr("x", x)
-            .attr("y", y)
-            .attr("dy", ++lineNumber * lineHeight + dy + "em")
-            .text(word);
-        }
+          .attr("dy", ++lineNumber * lineHeight + dy + "em")
+          .text(word);
       }
-    });
-  } //wrap
-} //RadarChart
+    }
+  });
+}
+
+export default RadarChart;
