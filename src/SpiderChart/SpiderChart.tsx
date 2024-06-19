@@ -24,11 +24,11 @@ const getSpiderChartData = (dataset: Entry[]): SpiderChartData => {
 
   const groupByGenre = dataset.reduce(
     (acc, row) => {
-      const key = row["track_genre"];
+      const key = row.track_genre;
       if (!acc[key]) {
         acc[key] = [];
       }
-      acc[key].push(row);
+      acc[key].push(row as unknown as d3.DSVRowString);
       return acc;
     },
     {} as Record<string, d3.DSVRowString[]>,
