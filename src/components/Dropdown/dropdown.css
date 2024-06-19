@@ -1,0 +1,7 @@
+.highlightOption  && .highlight{
+  background: #f0f0f0;
+}
+
+.option:hover {
+  padding: 10px;
+}

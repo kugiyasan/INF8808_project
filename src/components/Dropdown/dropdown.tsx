@@ -1,5 +1,6 @@
 import React from 'react';
 import Multiselect from 'multiselect-react-dropdown';
+import './dropdown.css'; // Import CSS for styling
 
 interface DropdownProps {
     options: object[];
@@ -13,7 +14,7 @@ interface DropdownProps {
 
 
 
-const Dropdown: React.FC<DropdownProps> = ({options, onUpdate}) => {
+const Dropdown: React.FC<DropdownProps> = ({options, onUpdate,placeholder}) => {
     const customStyles = {
         multiselectContainer: {
           width: '300px',
@@ -33,10 +34,13 @@ const Dropdown: React.FC<DropdownProps> = ({options, onUpdate}) => {
           backgroundColor: 'grey'
         },
         optionContainer: {
-          border: '2px solid'
+          border: '2px solid',
+          backgroundColor: 'red',
+          
         },
         option: {
-          color: 'black'
+          color: 'black',
+          backgroundColor: 'white',
         },
         groupHeading: {
           // Custom styles for group heading
@@ -53,6 +57,8 @@ const Dropdown: React.FC<DropdownProps> = ({options, onUpdate}) => {
             style={customStyles}
             onSelect={updateSelectedValues}
             onRemove={updateSelectedValues}
+            placeholder={placeholder ? placeholder : 'Select'}
+            selectedValues={[]}
             />
   );
 };
