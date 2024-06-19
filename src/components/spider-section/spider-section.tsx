@@ -15,7 +15,7 @@ const SpiderSection: React.FC<SpiderSectionProps> = ({ dataset }) => {
   return (
     <div className="visual-section">
         <h2>{genre}</h2>
-        <Dropdown onUpdate={setGenre} options={options} placeholder={''} singleSelect={false} />
+        <Dropdown onUpdate={setGenre} options={options} placeholder={'Select up to 5 genres'} limit={5} singleSelect={false} />
         <div className='visual-container'>
             <LinePlot data={[1, 5, 143, 76, 34, 87]} />
             {dataset === undefined ? null : <SpiderChart dataset={dataset} />}

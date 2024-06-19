@@ -14,7 +14,7 @@ interface DropdownProps {
 
 
 
-const Dropdown: React.FC<DropdownProps> = ({options, onUpdate,placeholder}) => {
+const Dropdown: React.FC<DropdownProps> = ({options, onUpdate,placeholder, limit}) => {
     const customStyles = {
         multiselectContainer: {
           width: '300px',
@@ -25,10 +25,13 @@ const Dropdown: React.FC<DropdownProps> = ({options, onUpdate,placeholder}) => {
         searchBox: {
           border: 'none',
           fontSize: '10px',
-          minHeight: '50px'
+          minHeight: '50px',
+          alignItems: 'center',
         },
         inputField: {
-          margin: '5px'
+          margin: '5px',
+
+
         },
         chips: {
           backgroundColor: 'grey'
@@ -42,9 +45,6 @@ const Dropdown: React.FC<DropdownProps> = ({options, onUpdate,placeholder}) => {
           color: 'black',
           backgroundColor: 'white',
         },
-        groupHeading: {
-          // Custom styles for group heading
-        }
       };
 
     const updateSelectedValues = (selectedList: any) => {
@@ -53,6 +53,7 @@ const Dropdown: React.FC<DropdownProps> = ({options, onUpdate,placeholder}) => {
   return (
     <Multiselect 
             options={options}
+            selectionLimit={limit ? limit : 100}
             displayValue="name"
             style={customStyles}
             onSelect={updateSelectedValues}
