@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import LinePlot from "./LinePlot/LinePlot";
 import * as d3 from "d3";
 import SpiderChart from "./SpiderChart/SpiderChart";
+import { Entry, preprocessDataset } from "./dataset";
 
 function App() {
   const [count, setCount] = useState(0);
 
-  const [dataset, setDataset] = useState<d3.DSVRowArray<string>>();
+  const [dataset, setDataset] = useState<Entry[]>();
 
   useEffect(() => {
     d3.csv("/dataset.csv")
       .then((df) => {
-        setDataset(df);
+        setDataset(preprocessDataset(df));
       })
       .catch(console.error);
   }, []);
@@ -44,7 +45,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
       <LinePlot data={[1, 5, 143, 76, 34, 87]} />
-      <SpiderChart />
+      {dataset === undefined ? null : <SpiderChart dataset={dataset} />}
     </>
   );
 }

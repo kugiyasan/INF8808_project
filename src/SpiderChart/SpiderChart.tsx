@@ -1,8 +1,55 @@
 import * as d3 from "d3";
 import RadarChart from "./RadarChart";
-import { useEffect, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
+import { Entry } from "../dataset";
 
-const SpiderChart = () => {
+interface SpiderChartProps {
+  dataset: Entry[];
+}
+
+type SpiderChartData = { axis: string; value: number }[][];
+
+const getSpiderChartData = (dataset: Entry[]): SpiderChartData => {
+  const spokeLabels = [
+    "popularity",
+    "danceability",
+    "energy",
+    "mode",
+    "speechiness",
+    "acousticness",
+    "instrumentalness",
+    "liveness",
+    "valence",
+  ];
+
+  const groupByGenre = dataset.reduce(
+    (acc, row) => {
+      const key = row["track_genre"];
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(row);
+      return acc;
+    },
+    {} as Record<string, d3.DSVRowString[]>,
+  );
+
+  const data = [];
+
+  for (const group of Object.values(groupByGenre)) {
+    const entry = [];
+    for (const label of spokeLabels) {
+      const mean = d3.mean(group.map((row) => Number(row[label])));
+      entry.push({ axis: label, value: mean! });
+    }
+
+    data.push(entry);
+  }
+
+  return data;
+};
+
+const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
   const margin = { top: 100, right: 100, bottom: 100, left: 100 };
   const width =
     Math.min(700, window.innerWidth - 10) - margin.left - margin.right;
@@ -10,57 +57,21 @@ const SpiderChart = () => {
     width,
     window.innerHeight - margin.top - margin.bottom - 20,
   );
-  const data = [
-    [
-      //iPhone
-      { axis: "Battery Life", value: 0.22 },
-      { axis: "Brand", value: 0.28 },
-      { axis: "Contract Cost", value: 0.29 },
-      { axis: "Design And Quality", value: 0.17 },
-      { axis: "Have Internet Connectivity", value: 0.22 },
-      { axis: "Large Screen", value: 0.02 },
-      { axis: "Price Of Device", value: 0.21 },
-      { axis: "To Be A Smartphone", value: 0.5 },
-    ],
-    [
-      //Samsung
-      { axis: "Battery Life", value: 0.27 },
-      { axis: "Brand", value: 0.16 },
-      { axis: "Contract Cost", value: 0.35 },
-      { axis: "Design And Quality", value: 0.13 },
-      { axis: "Have Internet Connectivity", value: 0.2 },
-      { axis: "Large Screen", value: 0.13 },
-      { axis: "Price Of Device", value: 0.35 },
-      { axis: "To Be A Smartphone", value: 0.38 },
-    ],
-    [
-      //Nokia Smartphone
-      { axis: "Battery Life", value: 0.26 },
-      { axis: "Brand", value: 0.1 },
-      { axis: "Contract Cost", value: 0.3 },
-      { axis: "Design And Quality", value: 0.14 },
-      { axis: "Have Internet Connectivity", value: 0.22 },
-      { axis: "Large Screen", value: 0.04 },
-      { axis: "Price Of Device", value: 0.41 },
-      { axis: "To Be A Smartphone", value: 0.3 },
-    ],
-  ];
+
+  const data = getSpiderChartData(dataset);
 
   const ref = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    const color = d3.scaleOrdinal(["#EDC951", "#CC333F", "#00A0B0"]);
-
     const radarChartOptions = {
       w: width,
       h: height,
       margin: margin,
-      maxValue: 0.5,
+      maxValue: 1,
       levels: 5,
       roundStrokes: true,
-      color: color,
     };
 
-    RadarChart(ref.current, data, radarChartOptions);
+    RadarChart(ref.current, data.slice(0, 5), radarChartOptions);
   });
 
   return <div ref={ref}></div>;
