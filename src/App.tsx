@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import LinePlot from "./LinePlot/LinePlot";
 import * as d3 from "d3";
-import SpiderChart from "./SpiderChart/SpiderChart";
 import { Entry, preprocessDataset } from "./dataset";
 import Footer from "./components/footer-section/footer.tsx";
-import SpotifyPlayer from "./components/spotify-player/spotify-player.tsx";
 import Introduction from "./components/introduction-section/introduction.tsx";
 import SpiderSection from "./components/spider-section/spider-section.tsx";
 

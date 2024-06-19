@@ -1,7 +1,6 @@
 import React from 'react';
 import './footer.css'; // Import CSS for styling
 import ProfileCard from '../profile-card/profile-card';
-import Navbar from '../navbar/navbar';
 
 interface FooterProps {
   trackId: string;
@@ -52,7 +51,7 @@ const teamMembers: TeamMember[] = [
   }
 ];
 
-const Footer: React.FC<FooterProps> = ({ setTrackId, trackId }) => {
+const Footer: React.FC<FooterProps> = ({ setTrackId }) => {
   return (
     <div className="footer">
       <div className="visual-container">
