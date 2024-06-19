@@ -7,6 +7,7 @@ import { Entry, preprocessDataset } from "./dataset";
 import Footer from "./components/footer-section/footer.tsx";
 import SpotifyPlayer from "./components/spotify-player/spotify-player.tsx";
 import Introduction from "./components/introduction-section/introduction.tsx";
+import SpiderSection from "./components/spider-section/spider-section.tsx";
 
 function App() {
 
@@ -29,9 +30,7 @@ function App() {
         <Introduction />
       </div>
       <div className="section" id="section2">
-        <h1>Section 2</h1>
-        <LinePlot data={[1, 5, 143, 76, 34, 87]} />
-        {dataset === undefined ? null : <SpiderChart dataset={dataset} />}  
+        <SpiderSection dataset={dataset} />
       </div>
       <div className="section" id="section3">
         <Footer

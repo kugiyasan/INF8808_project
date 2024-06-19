@@ -1,64 +1,85 @@
 import React from 'react';
 import './footer.css'; // Import CSS for styling
 import ProfileCard from '../profile-card/profile-card';
-import SpotifyPlayer from '../spotify-player/spotify-player';
+import Navbar from '../navbar/navbar';
 
 interface FooterProps {
-    trackId: string;
-    setTrackId: (trackId: string) => void;
-  }
+  trackId: string;
+  setTrackId: (trackId: string) => void;
+}
 
-const Footer: React.FC<FooterProps> = ({setTrackId, trackId}) => {
+interface TeamMember {
+  name: string;
+  githubName: string;
+  trackId: string;
+}
+
+const teamMembers: TeamMember[] = [
+  {
+    name: 'Maxime Pierre',
+    githubName: 'maximepierregit',
+    trackId: '7jfZybgHr6yzp4iuMS2K8u?si=456f98dfd94349eb'
+  },
+  {
+    name: 'Leo Banno-Cloutier',
+    githubName: 'kugiyasan',
+    trackId: '5w6EvyvomUSWsF430iixmc?si=afa4184775034a3c'
+  },
+  {
+    name: 'Boniface Bahati Tadjuidje',
+    githubName: 'gossterrible',
+    trackId: '4xlpJ99yL9xYQtzG6c3hwk?si=dbbc41c1eca848bf'
+  },
+  {
+    name: 'Yuliia Yuriyivn Ozirska',
+    githubName: 'YuliiaOz',
+    trackId: '3s44Qv8x974tm0ueLexMWN?si=f73a98ae99a04fdb'
+  },
+  {
+    name: 'Hamid Zand Miralvand',
+    githubName: 'hamidzandm',
+    trackId: '3s44Qv8x974tm0ueLexMWN?si=f73a98ae99a04fdb'
+  },
+  {
+    name: 'François Tourigny',
+    githubName: 'tourtourigny',
+    trackId: '3s44Qv8x974tm0ueLexMWN?si=f73a98ae99a04fdb'
+  },
+  {
+    name: 'Ahmed Zghal',
+    githubName: 'AhmedZghal',
+    trackId: '3s44Qv8x974tm0ueLexMWN?si=f73a98ae99a04fdb'
+  }
+];
+
+const Footer: React.FC<FooterProps> = ({ setTrackId, trackId }) => {
   return (
     <div className="footer">
+      <div className="visual-container">
         <h1>Meet the team</h1>
-      <div className="row">
-      <ProfileCard
-            name='Maxime Pierre'
-            githubName='maximepierregit'
-            setTrackId={setTrackId}
-            trackId='7jfZybgHr6yzp4iuMS2K8u?si=456f98dfd94349eb'
-        />
-        <ProfileCard
-            name='Leo Banno-Cloutier'
-            githubName='kugiyasan'
-            setTrackId={setTrackId}
-            trackId='5w6EvyvomUSWsF430iixmc?si=afa4184775034a3c'
-        />
-        <ProfileCard
-            name='Boniface Bahati Tadjuidje'
-            githubName='gossterrible'
-            setTrackId={setTrackId}
-            trackId='4xlpJ99yL9xYQtzG6c3hwk?si=dbbc41c1eca848bf'
-        />
-        <ProfileCard
-            name='Yuliia Yuriyivn Ozirska'
-            githubName='YuliiaOz'
-            setTrackId={setTrackId}
-            trackId='3s44Qv8x974tm0ueLexMWN?si=f73a98ae99a04fdb'
-        />
+        <div className="row">
+          {teamMembers.slice(0, 4).map((member, index) => (
+            <ProfileCard
+              key={index}
+              name={member.name}
+              githubName={member.githubName}
+              setTrackId={setTrackId}
+              trackId={member.trackId}
+            />
+          ))}
+        </div>
+        <div className="row">
+          {teamMembers.slice(4).map((member, index) => (
+            <ProfileCard
+              key={index + 4}
+              name={member.name}
+              githubName={member.githubName}
+              setTrackId={setTrackId}
+              trackId={member.trackId}
+            />
+          ))}
+        </div>
       </div>
-      <div className="row">
-      <ProfileCard
-            name='Hamid Zand Miralvand'
-            githubName='hamidzandm'
-            setTrackId={setTrackId}
-            trackId='3s44Qv8x974tm0ueLexMWN?si=f73a98ae99a04fdb'
-        />
-        <ProfileCard
-            name='François Tourigny'
-            githubName='tourtourigny'
-            setTrackId={setTrackId}
-            trackId='3s44Qv8x974tm0ueLexMWN?si=f73a98ae99a04fdb'
-        />
-        <ProfileCard
-            name='Ahmed Zghal'
-            githubName='AhmedZghal'
-            setTrackId={setTrackId}
-            trackId='3s44Qv8x974tm0ueLexMWN?si=f73a98ae99a04fdb'
-        />
-      </div>
-      <SpotifyPlayer track={trackId}/>
     </div>
   );
 };

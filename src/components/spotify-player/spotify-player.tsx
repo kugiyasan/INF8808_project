@@ -13,7 +13,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ track }) => {
             key={track} // Add key to force re-render
             id='embedded-player'
             src={`https://open.spotify.com/embed/track/${track}?utm_source=generator&theme=0`}
-            width="500"
+            width="300"
             height="152"
             frameBorder="0"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"

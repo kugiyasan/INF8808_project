@@ -13,8 +13,8 @@ interface LinePlotProps {
 
 const LinePlot: FC<LinePlotProps> = ({
   data,
-  width = 640,
-  height = 200,
+  width = 600,
+  height = 80,
   marginTop = 20,
   marginRight = 20,
   marginBottom = 20,
