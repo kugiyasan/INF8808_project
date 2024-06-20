@@ -57,6 +57,7 @@ function RadarChart(
   if ("undefined" !== typeof options) {
     for (const i in options) {
       if ("undefined" !== typeof options[i]) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         cfg[i] = options[i];
       }
     }
@@ -94,11 +95,11 @@ function RadarChart(
   svg
     .append("text")
     .attr("x", (cfg.w / 2) + cfg.margin.left)
-    .attr("y", cfg.margin.top / 2)
+    .attr("y", cfg.margin.top - 40)
     .attr("text-anchor", "middle")
     .style("font-size", "24px")
     .style("font-weight", "bold")
-    .text("Title of the ");
+    .text("Title of the spiderchart ");
 
   //Append a g element
   const g = svg
