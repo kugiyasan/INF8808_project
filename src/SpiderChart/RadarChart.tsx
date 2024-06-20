@@ -40,7 +40,7 @@ function RadarChart(
   const cfg: Options = {
     w: 600,
     h: 600,
-    margin: { top: 20, right: 20, bottom: 20, left: 20 },
+    margin: { top: 60, right: 20, bottom: 20, left: 20 }, // Increased top margin for title
     levels: 3,
     maxValue: 0,
     labelFactor: 1.25,
@@ -89,6 +89,17 @@ function RadarChart(
     .attr("width", cfg.w + cfg.margin.left + cfg.margin.right)
     .attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
     .attr("class", "radar" + id);
+
+  // Add the title
+  svg
+    .append("text")
+    .attr("x", (cfg.w / 2) + cfg.margin.left)
+    .attr("y", cfg.margin.top / 2)
+    .attr("text-anchor", "middle")
+    .style("font-size", "24px")
+    .style("font-weight", "bold")
+    .text("Title of the ");
+
   //Append a g element
   const g = svg
     .append("g")
