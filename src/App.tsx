@@ -12,7 +12,7 @@ function App() {
   const [dataset, setDataset] = useState<Entry[]>();
 
   useEffect(() => {
-    d3.csv("/dataset.csv")
+    d3.csv("./dataset.csv")
       .then((df) => {
         setDataset(preprocessDataset(df));
       })
