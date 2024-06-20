@@ -27,7 +27,7 @@ body, html {
 .section {
   scroll-snap-align: start;
   background-color: #1db954;
-  height: 120vh;
+  height: 150vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -55,4 +55,12 @@ h1 {
 
 #embedded-player {
   border-radius: 12px;
+}
+
+.legend-circle {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px; 
 }
