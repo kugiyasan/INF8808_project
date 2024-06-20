@@ -9,10 +9,14 @@ import Footer from "./components/footer-section/footer.tsx";
 import Introduction from "./components/introduction-section/introduction.tsx";
 import RidgeLineSection from "./components/ridge-line-section/ridge-line-section.tsx";
 import SpiderSection from "./components/spider-section/spider-section.tsx";
+import BoxPlotSection from "./components/boxplot-section/boxplot-section.tsx";
+import HeatmapD3 from "./HeatMap/HeatMap.tsx";
+import HeatmapSection from "./components/heatmap-section/heatmap-section.tsx";
 
 function App() {
-
-  const [track, setTrack] = useState('3s44Qv8x974tm0ueLexMWN?si=f73a98ae99a04fdb');
+  const [track, setTrack] = useState(
+    "3s44Qv8x974tm0ueLexMWN?si=f73a98ae99a04fdb"
+  );
   const [dataset, setDataset] = useState<Entry[]>();
 
   useEffect(() => {
@@ -36,7 +40,13 @@ function App() {
       <div className="section" id="section3">
         <RidgeLineSection dataset={dataset} />
       </div>
-      <div className="section" id="section3">
+      <div className="section" id="section4">
+        <BoxPlotSection dataset={dataset} />
+      </div>
+      <div className="section" id="section5">
+        <HeatmapSection dataset={dataset} />
+      </div>
+      <div className="section" id="section6">
         <Footer
           setTrackId={setTrack}
           trackId={track}

@@ -1,13 +1,17 @@
 import Dropdown from '../Dropdown/dropdown';
 import React from 'react';
 import RidgelinePlot from '../../RidgeLine/RidgeLine';
+import './ridge-line-section.css';
 
 interface RidgeLineSectionProps {
     dataset?: any[];
 }
 
 const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
-    const [selectedGenres, setSelectedGenres] = React.useState<string[]>([]);
+    const preSelectedOptions = [
+        { name: 'Rock' }, { name: 'Pop' }, { name: 'Hip-Hop' }, { name: 'Jazz' }, { name: 'Classical' }
+    ];
+    const [selectedGenres, setSelectedGenres] = React.useState<string[]>(preSelectedOptions.map ((genre) => genre.name.toLowerCase()));
     const [kernelBandwidth, setKernelBandwidth] = React.useState<number>(7);
     const [numTicks, setNumTicks] = React.useState<number>(40);
 
@@ -18,6 +22,7 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
         { name: 'Dance' }, { name: 'Trance' }, { name: 'Dubstep' }, { name: 'Drum and Bass' }
     ];
 
+
     const handleUpdateGenres = (selected: string[]) => {
         setSelectedGenres(selected.map((genre) => genre.toLowerCase()));
     }
@@ -25,7 +30,7 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
     return (
         <div className="visual-section">
             <h2>Selected Genres: {selectedGenres.join(', ')}</h2>
-            <Dropdown onUpdate={handleUpdateGenres} options={options} placeholder={'Select up to 5 genres'} limit={5} singleSelect={false} />
+            <Dropdown onUpdate={handleUpdateGenres} options={options} placeholder={'Select up to 5 genres'} limit={5} singleSelect={false} preSelected={preSelectedOptions} />
 
             {/* <div>
                 <label>

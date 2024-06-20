@@ -8,13 +8,13 @@ interface DropdownProps {
     placeholder?: string;
     singleSelect: boolean;
     limit?: number;
-
+    preSelected?: object[];
 
 }
 
 
 
-const Dropdown: React.FC<DropdownProps> = ({options, onUpdate,placeholder, limit}) => {
+const Dropdown: React.FC<DropdownProps> = ({options, onUpdate,placeholder, limit, preSelected}) => {
     const customStyles = {
         multiselectContainer: {
           width: '300px',
@@ -46,7 +46,7 @@ const Dropdown: React.FC<DropdownProps> = ({options, onUpdate,placeholder, limit
           backgroundColor: 'white',
         },
       };
-
+    
     const updateSelectedValues = (selectedList: any) => {
         onUpdate(selectedList.map((item: any) => item.name));
     }
@@ -59,7 +59,7 @@ const Dropdown: React.FC<DropdownProps> = ({options, onUpdate,placeholder, limit
             onSelect={updateSelectedValues}
             onRemove={updateSelectedValues}
             placeholder={placeholder ? placeholder : 'Select'}
-            selectedValues={[]}
+            selectedValues={preSelected ? preSelected : []}
             />
   );
 };
