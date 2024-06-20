@@ -87,8 +87,14 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
       .attr("class", "color-legend");
 
     colorLegend
-      .append("div")
-      .attr("class", "legend-color");
+    .append("svg")
+    .attr("width", 10)
+    .attr("height", 10)
+    .append("circle")
+    .attr("cx", 5)
+    .attr("cy", 5)
+    .attr("r", 4)
+    .style("fill", "red");
 
     colorLegend.append("span").text((d) => d);
   };
