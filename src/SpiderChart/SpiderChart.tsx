@@ -74,7 +74,10 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
 
   const createLegend = () => {
     const legendContainer = d3.select(ref.current);
-    legendContainer.append("h2").text("Legend");
+    if (legendContainer.select("h2").empty()) {
+      // Ajouter le titre "Legend" s'il n'existe pas encore
+      legendContainer.append("h2").text("Legend");
+    }
 
     const colorLegend = legendContainer
       .selectAll(".color-legend")
