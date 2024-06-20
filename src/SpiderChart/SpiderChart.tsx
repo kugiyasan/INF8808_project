@@ -69,8 +69,9 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
     };
 
     RadarChart(ref.current, data.slice(0, 5), radarChartOptions);
-    createLegend();
-  });
+  createLegend();
+
+}, []);
 
   const createLegend = () => {
     const legendContainer = d3.select(ref.current);
