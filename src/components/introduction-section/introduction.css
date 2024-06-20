@@ -13,3 +13,25 @@
     border-radius: 50%;
     margin-right: 30px;
   }
+
+  #left-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width : 30%;
+  }
+
+  #right-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width : 30%;
+    padding: 100px;
+  }
+
+  p {
+    text-align: justify;
+  text-justify: inter-word;
+  }

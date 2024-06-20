@@ -13,7 +13,7 @@ const SpiderSection: React.FC<SpiderSectionProps> = ({ dataset }) => {
     const [genre, setGenre] = React.useState('');
     const options = [{name: 'Rock'}, {name: 'Pop'}, {name: 'Hip-Hop'}, {name: 'Jazz'}, {name: 'Classical'}, {name: 'Electronic'}, {name: 'R&B'}, {name: 'Country'}, {name: 'Folk'}, {name: 'Reggae'}, {name: 'Blues'}, {name: 'Metal'}, {name: 'Punk'}, {name: 'Disco'}, {name: 'Soul'}, {name: 'Funk'}, {name: 'Techno'}, {name: 'House'}, {name: 'Dance'}, {name: 'Trance'}, {name: 'Dubstep'}, {name: 'Drum and Bass'}]
   return (
-    <div className="visual-section">
+    <div className="spider-section">
         <h2>{genre}</h2>
         <Dropdown onUpdate={setGenre} options={options} placeholder={'Select up to 5 genres'} limit={5} singleSelect={false} />
         <div className='visual-container'>

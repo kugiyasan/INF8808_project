@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Dropdown from "../Dropdown/dropdown";
 import HeatmapD3 from "../../HeatMap/HeatMap";
+import "./heatmap-section.css";
 
 interface HeatmapSectionProps {
   dataset?: any[];

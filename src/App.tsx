@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
 import "./App.css";
+
 import * as d3 from "d3";
+
 import { Entry, preprocessDataset } from "./dataset";
+import { useEffect, useState } from "react";
+
 import Footer from "./components/footer-section/footer.tsx";
 import Introduction from "./components/introduction-section/introduction.tsx";
+import RidgeLineSection from "./components/ridge-line-section/ridge-line-section.tsx";
 import SpiderSection from "./components/spider-section/spider-section.tsx";
 import BoxPlotSection from "./components/boxplot-section/boxplot-section.tsx";
 import HeatmapD3 from "./HeatMap/HeatMap.tsx";
@@ -34,13 +38,19 @@ function App() {
         <SpiderSection dataset={dataset} />
       </div>
       <div className="section" id="section3">
-        <HeatmapSection dataset={dataset} />
+        <RidgeLineSection dataset={dataset} />
       </div>
       <div className="section" id="section4">
         <BoxPlotSection dataset={dataset} />
       </div>
       <div className="section" id="section5">
-        <Footer setTrackId={setTrack} trackId={track} />
+        <HeatmapSection dataset={dataset} />
+      </div>
+      <div className="section" id="section6">
+        <Footer
+          setTrackId={setTrack}
+          trackId={track}
+        />
       </div>
     </div>
   );
