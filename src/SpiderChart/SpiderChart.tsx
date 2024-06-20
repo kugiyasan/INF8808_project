@@ -1,6 +1,6 @@
-import * as d3 from "d3";
+import React, { FC, useEffect, useRef } from "react";
 import RadarChart from "./RadarChart";
-import { FC, useEffect, useRef } from "react";
+import * as d3 from "d3";
 import { Entry } from "../dataset";
 
 interface SpiderChartProps {
@@ -9,7 +9,7 @@ interface SpiderChartProps {
 
 type SpiderChartData = { axis: string; value: number }[][];
 
-const getSpiderChartData = (dataset: Entry[]): SpiderChartData => {
+const getSpiderChartData = (dataset: Entry[]): { data: SpiderChartData; genres: string[] } => {
   const spokeLabels = [
     "popularity",
     "danceability",
@@ -35,30 +35,27 @@ const getSpiderChartData = (dataset: Entry[]): SpiderChartData => {
   );
 
   const data = [];
+  const genres = [];
 
-  for (const group of Object.values(groupByGenre)) {
+  for (const [genre, group] of Object.entries(groupByGenre)) {
     const entry = [];
     for (const label of spokeLabels) {
       const mean = d3.mean(group.map((row) => Number(row[label])));
       entry.push({ axis: label, value: mean! });
     }
-
     data.push(entry);
+    genres.push(genre);
   }
 
-  return data;
+  return { data, genres };
 };
 
 const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
   const margin = { top: 100, right: 100, bottom: 100, left: 100 };
-  const width =
-    Math.min(700, window.innerWidth - 10) - margin.left - margin.right;
-  const height = Math.min(
-    width,
-    window.innerHeight - margin.top - margin.bottom - 20,
-  );
+  const width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right;
+  const height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
 
-  const data = getSpiderChartData(dataset);
+  const { data, genres } = getSpiderChartData(dataset);
 
   const ref = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -72,8 +69,26 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
     };
 
     RadarChart(ref.current, data.slice(0, 5), radarChartOptions);
+    createLegend();
   });
 
+  const createLegend = () => {
+    const legendContainer = d3.select(ref.current).append("div").attr("class", "legend-container");
+
+    const colorLegend = legendContainer
+      .selectAll(".color-legend")
+      .data(genres)
+      .enter()
+      .append("div")
+      .attr("class", "color-legend");
+
+    colorLegend
+      .append("div")
+      .attr("class", "legend-color");
+
+    colorLegend.append("span").text((d) => d);
+  };
+  
   return <div ref={ref}></div>;
 };
 
