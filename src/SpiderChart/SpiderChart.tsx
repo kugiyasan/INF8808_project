@@ -73,11 +73,11 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
   });
 
   const createLegend = () => {
-    const legendContainer = d3.select(ref.current).append("div").attr("class", "legend-container");
+    const legendContainer = d3.select(ref.current);
 
     const colorLegend = legendContainer
       .selectAll(".color-legend")
-      .data(genres)
+      .data(genres.slice(0, 5))
       .enter()
       .append("div")
       .attr("class", "color-legend");
