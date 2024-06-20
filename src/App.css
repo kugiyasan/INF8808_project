@@ -27,7 +27,6 @@ body, html {
 .section {
   scroll-snap-align: start;
   background-color: #1db954;
-  height: 150vh;
   width: 100vw;
   display: flex;
   justify-content: center;
