@@ -58,6 +58,8 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
   const { data, genres } = getSpiderChartData(dataset);
 
   const ref = useRef<HTMLInputElement>(null);
+  const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
   useEffect(() => {
     const radarChartOptions = {
       w: width,
@@ -66,17 +68,16 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
       maxValue: 1,
       levels: 5,
       roundStrokes: true,
+      color: colorScale,
     };
 
     RadarChart(ref.current, data.slice(0, 5), radarChartOptions);
-  createLegend();
-
-}, []);
+    createLegend();
+  }, []);
 
   const createLegend = () => {
     const legendContainer = d3.select(ref.current);
     if (legendContainer.select("h2").empty()) {
-      // Ajouter le titre "Legend" s'il n'existe pas encore
       legendContainer.append("h2").text("Legend");
     }
 
@@ -85,22 +86,24 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
       .data(genres.slice(0, 5))
       .enter()
       .append("div")
-      .attr("class", "color-legend");
-
+      .attr("class", "color-legend")
+      .style("display", "flex") 
+      .style("align-items", "center")
+      .style("margin-bottom", "4px");
     colorLegend
-    .append("svg")
-    .attr("width", 10)
-    .attr("height", 10)
-    .append("circle")
-    .attr("cx", 5)
-    .attr("cy", 5)
-    .attr("r", 4)
-    .style("fill", "red")
-    .style("margin-right", "5px");
+      .append("svg")
+      .attr("width", 10)
+      .attr("height", 10)
+      .style("margin-right", "5px")
+      .append("circle")
+      .attr("cx", 5)
+      .attr("cy", 5)
+      .attr("r", 4)
+      .style("fill", (d, i) => colorScale(i));
 
     colorLegend.append("span")
-    .style("margin-left", "5px")
-    .text((d) => d);
+      .style("margin-left", "5px")
+      .text((d) => d);
   };
   
   return <div ref={ref}></div>;
