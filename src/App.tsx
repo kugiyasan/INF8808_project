@@ -10,8 +10,8 @@ import Introduction from "./components/introduction-section/introduction.tsx";
 import RidgeLineSection from "./components/ridge-line-section/ridge-line-section.tsx";
 import SpiderSection from "./components/spider-section/spider-section.tsx";
 import BoxPlotSection from "./components/boxplot-section/boxplot-section.tsx";
-import HeatmapD3 from "./HeatMap/HeatMap.tsx";
 import HeatmapSection from "./components/heatmap-section/heatmap-section.tsx";
+import CorrelationSection from "./components/correlation-section/heatmap-section.tsx";
 
 function App() {
   const [track, setTrack] = useState(
@@ -37,6 +37,9 @@ function App() {
       <div className="section" id="section2">
         <SpiderSection dataset={dataset} />
       </div>
+      <div className="section" id="section4">
+        <HeatmapSection dataset={dataset} />
+      </div>
       <div className="section" id="section3">
         <RidgeLineSection dataset={dataset} />
       </div>
@@ -47,6 +50,9 @@ function App() {
         <HeatmapSection dataset={dataset} />
       </div>
       <div className="section" id="section6">
+        <CorrelationSection dataset={dataset} />
+      </div>
+      <div className="section" id="section7">
         <Footer
           setTrackId={setTrack}
           trackId={track}
