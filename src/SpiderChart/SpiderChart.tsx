@@ -95,9 +95,12 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
     .attr("cx", 5)
     .attr("cy", 5)
     .attr("r", 4)
-    .style("fill", "red");
+    .style("fill", "red")
+    .style("margin-right", "5px");
 
-    colorLegend.append("span").text((d) => d);
+    colorLegend.append("span")
+    .style("margin-left", "5px")
+    .text((d) => d);
   };
   
   return <div ref={ref}></div>;
