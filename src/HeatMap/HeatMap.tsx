@@ -79,7 +79,7 @@ const HeatmapD3: React.FC<HeatmapD3Props> = ({ data, factors }) => {
         const factor2 = factors[j];
         const correlation = calculateCorrelation(
           data.map((d) => d[factor1]),
-          data.map((d) => d[factor2])
+          data.map((d) => d[factor2]),
         );
         correlations.push({ factor1, factor2, value: correlation });
       }
@@ -94,10 +94,10 @@ const HeatmapD3: React.FC<HeatmapD3Props> = ({ data, factors }) => {
     const covariance =
       d3.sum(x.map((xi, i) => (xi - meanX!) * (y[i] - meanY!))) / n;
     const stdDevX = Math.sqrt(
-      d3.sum(x.map((xi) => Math.pow(xi - meanX!, 2))) / n
+      d3.sum(x.map((xi) => Math.pow(xi - meanX!, 2))) / n,
     );
     const stdDevY = Math.sqrt(
-      d3.sum(y.map((yi) => Math.pow(yi - meanY!, 2))) / n
+      d3.sum(y.map((yi) => Math.pow(yi - meanY!, 2))) / n,
     );
     return covariance / (stdDevX * stdDevY);
   };

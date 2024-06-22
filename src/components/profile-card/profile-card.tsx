@@ -1,5 +1,5 @@
-import React from 'react';
-import './profile-card.css'; // Import CSS for styling
+import React from "react";
+import "./profile-card.css"; // Import CSS for styling
 
 // Define the type for the props
 interface ProfileCardProps {
@@ -9,10 +9,15 @@ interface ProfileCardProps {
   trackId: string;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ name, githubName, setTrackId, trackId }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({
+  name,
+  githubName,
+  setTrackId,
+  trackId,
+}) => {
   const handleClick = () => {
     setTrackId(trackId);
-    console.log('Clicked on', name);
+    console.log("Clicked on", name);
   };
 
   return (

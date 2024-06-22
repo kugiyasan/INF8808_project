@@ -94,8 +94,8 @@ function RadarChart(
   // Add the title
   svg
     .append("text")
-    .attr("x", (cfg.w / 2) + cfg.margin.left)
-    .attr("y", cfg.margin.top - 80 )
+    .attr("x", cfg.w / 2 + cfg.margin.left)
+    .attr("y", cfg.margin.top - 80)
     .attr("text-anchor", "middle")
     .style("font-size", "24px")
     .style("font-weight", "bold")

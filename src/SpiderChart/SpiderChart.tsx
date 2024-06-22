@@ -9,7 +9,9 @@ interface SpiderChartProps {
 
 type SpiderChartData = { axis: string; value: number }[][];
 
-const getSpiderChartData = (dataset: Entry[]): { data: SpiderChartData; genres: string[] } => {
+const getSpiderChartData = (
+  dataset: Entry[],
+): { data: SpiderChartData; genres: string[] } => {
   const spokeLabels = [
     "popularity",
     "danceability",
@@ -52,8 +54,12 @@ const getSpiderChartData = (dataset: Entry[]): { data: SpiderChartData; genres: 
 
 const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
   const margin = { top: 100, right: 100, bottom: 100, left: 100 };
-  const width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right;
-  const height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+  const width =
+    Math.min(700, window.innerWidth - 10) - margin.left - margin.right;
+  const height = Math.min(
+    width,
+    window.innerHeight - margin.top - margin.bottom - 20,
+  );
 
   const { data, genres } = getSpiderChartData(dataset);
 
@@ -87,7 +93,7 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
       .enter()
       .append("div")
       .attr("class", "color-legend")
-      .style("display", "flex") 
+      .style("display", "flex")
       .style("align-items", "center")
       .style("margin-bottom", "4px");
     colorLegend
@@ -101,11 +107,12 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
       .attr("r", 4)
       .style("fill", (d, i) => colorScale(i));
 
-    colorLegend.append("span")
+    colorLegend
+      .append("span")
       .style("margin-left", "5px")
       .text((d) => d);
   };
-  
+
   return <div ref={ref}></div>;
 };
 

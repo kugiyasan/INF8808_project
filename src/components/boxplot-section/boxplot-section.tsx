@@ -14,7 +14,7 @@ const BoxPlotSection: React.FC<BoxPlotSectionProps> = ({ dataset }) => {
   useEffect(() => {
     if (dataset) {
       const uniqueGenres = Array.from(
-        new Set(dataset.map((track) => track.track_genre))
+        new Set(dataset.map((track) => track.track_genre)),
       );
       setOptions(uniqueGenres.map((genre) => ({ name: genre })));
     }

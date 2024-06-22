@@ -15,7 +15,7 @@ import CorrelationSection from "./components/correlation-section/heatmap-section
 
 function App() {
   const [track, setTrack] = useState(
-    "3s44Qv8x974tm0ueLexMWN?si=f73a98ae99a04fdb"
+    "3s44Qv8x974tm0ueLexMWN?si=f73a98ae99a04fdb",
   );
   const [dataset, setDataset] = useState<Entry[]>();
 
@@ -53,10 +53,7 @@ function App() {
         <CorrelationSection dataset={dataset} />
       </div>
       <div className="section" id="section7">
-        <Footer
-          setTrackId={setTrack}
-          trackId={track}
-        />
+        <Footer setTrackId={setTrack} trackId={track} />
       </div>
     </div>
   );

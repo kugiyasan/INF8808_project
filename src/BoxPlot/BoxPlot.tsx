@@ -18,10 +18,10 @@ interface BoxPlotData {
 
 const getBoxPlotData = (
   dataset: Entry[],
-  selectedGenres: string[]
+  selectedGenres: string[],
 ): BoxPlotData[] => {
   const filteredData = dataset.filter((track) =>
-    selectedGenres.includes(track.track_genre)
+    selectedGenres.includes(track.track_genre),
   );
 
   const groupedData = d3.groups(filteredData, (d) => d.track_genre);
@@ -81,7 +81,7 @@ const BoxPlotD3: React.FC<BoxPlotD3Props> = ({ data, genres }) => {
       .append("g")
       .attr(
         "transform",
-        (d) => `translate(${x(d.genre)! + x.bandwidth() / 2},0)`
+        (d) => `translate(${x(d.genre)! + x.bandwidth() / 2},0)`,
       )
       .each(function (d) {
         const g = d3.select(this);

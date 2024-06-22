@@ -12,7 +12,7 @@ const CorrelationSection: React.FC<CorrelationSectionProps> = ({ dataset }) => {
       <h2>Correlation of genres with popularity</h2>
       <div className="correlation-container">
         {dataset === undefined ? null : (
-          <CorrelationHeatmap dataset={dataset}/>
+          <CorrelationHeatmap dataset={dataset} />
         )}
       </div>
     </div>

@@ -1,37 +1,37 @@
 #container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-    background-color: #525252;
-  }
-  
-  #spotify-logo{
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    margin-right: 30px;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #525252;
+}
 
-  #left-column{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width : 30%;
-  }
+#spotify-logo {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  margin-right: 30px;
+}
 
-  #right-column{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width : 30%;
-    padding: 100px;
-  }
+#left-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+}
 
-  p {
-    text-align: justify;
+#right-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  padding: 100px;
+}
+
+p {
+  text-align: justify;
   text-justify: inter-word;
-  }
+}
