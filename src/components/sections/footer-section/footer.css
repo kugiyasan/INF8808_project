@@ -2,22 +2,6 @@
   display: flex;
 }
 
-.circle {
-  width: 200px;
-  height: 200px;
-  background-color: #e4e4e4; /* Spotify green */
-  border-radius: 50%;
-  margin: 10px;
-}
-
-.visual-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 80%;
-}
-
 h1 {
   margin-bottom: 50px;
 }

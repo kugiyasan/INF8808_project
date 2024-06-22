@@ -29,7 +29,7 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
   };
 
   return (
-    <div className="visual-section">
+    <>
       <h2>Selected Genres: {selectedGenres.join(", ")}</h2>
       <Dropdown
         onUpdate={handleUpdateGenres}
@@ -70,7 +70,7 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
           numTicks={numTicks}
         />
       </div>
-    </div>
+    </>
   );
 };
 

@@ -8,12 +8,12 @@ interface CorrelationSectionProps {
 
 const CorrelationSection: FC<CorrelationSectionProps> = ({ dataset }) => {
   return (
-    <div className="correlation-section">
+    <>
       <h2>Correlation of genres with popularity</h2>
       <div className="correlation-container">
         <CorrelationHeatmap dataset={dataset} />
       </div>
-    </div>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 import Multiselect from "multiselect-react-dropdown";
 import "./dropdown.css"; // Import CSS for styling
 
-interface Item {
+export interface DropdownItem {
   name: string;
 }
 
@@ -11,7 +11,7 @@ interface DropdownProps {
   onUpdate: (selected: string[]) => void;
   placeholder?: string;
   limit?: number;
-  preSelected?: Item[];
+  preSelected?: DropdownItem[];
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -50,7 +50,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     },
   };
 
-  const updateSelectedValues = (selectedList: Item[]) => {
+  const updateSelectedValues = (selectedList: DropdownItem[]) => {
     onUpdate(selectedList.map((item) => item.name));
   };
 

@@ -53,33 +53,31 @@ const teamMembers: TeamMember[] = [
 
 const Footer: React.FC<FooterProps> = ({ setTrackId }) => {
   return (
-    <div className="footer">
-      <div className="visual-container">
-        <h1>Meet the team</h1>
-        <div className="row">
-          {teamMembers.slice(0, 4).map((member, index) => (
-            <ProfileCard
-              key={index}
-              name={member.name}
-              githubName={member.githubName}
-              setTrackId={setTrackId}
-              trackId={member.trackId}
-            />
-          ))}
-        </div>
-        <div className="row">
-          {teamMembers.slice(4).map((member, index) => (
-            <ProfileCard
-              key={index + 4}
-              name={member.name}
-              githubName={member.githubName}
-              setTrackId={setTrackId}
-              trackId={member.trackId}
-            />
-          ))}
-        </div>
+    <>
+      <h1>Meet the team</h1>
+      <div className="row">
+        {teamMembers.slice(0, 4).map((member, index) => (
+          <ProfileCard
+            key={index}
+            name={member.name}
+            githubName={member.githubName}
+            setTrackId={setTrackId}
+            trackId={member.trackId}
+          />
+        ))}
       </div>
-    </div>
+      <div className="row">
+        {teamMembers.slice(4).map((member, index) => (
+          <ProfileCard
+            key={index + 4}
+            name={member.name}
+            githubName={member.githubName}
+            setTrackId={setTrackId}
+            trackId={member.trackId}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 

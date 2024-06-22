@@ -27,7 +27,7 @@ const BoxPlotSection: React.FC<BoxPlotSectionProps> = ({ dataset }) => {
   };
 
   return (
-    <div className="boxplot-section">
+    <>
       <h2>Genres: {genres.join(", ")}</h2>
       <Dropdown
         onUpdate={handleGenreSelection}
@@ -38,7 +38,7 @@ const BoxPlotSection: React.FC<BoxPlotSectionProps> = ({ dataset }) => {
       <div className="boxplot-container">
         <BoxPlotD3 data={dataset} genres={genres} />
       </div>
-    </div>
+    </>
   );
 };
 

@@ -11,7 +11,7 @@ interface SpiderSectionProps {
 const SpiderSection: React.FC<SpiderSectionProps> = ({ dataset }) => {
   const [genre, setGenre] = React.useState<string[]>([]);
   return (
-    <div className="spider-section">
+    <>
       <h2>{genre}</h2>
       <Dropdown
         onUpdate={setGenre}
@@ -22,7 +22,7 @@ const SpiderSection: React.FC<SpiderSectionProps> = ({ dataset }) => {
       <div className="visual-container">
         <SpiderChart dataset={dataset} />
       </div>
-    </div>
+    </>
   );
 };
 

@@ -42,7 +42,7 @@ const ScatterPlotSection: React.FC<ScatterPlotSectionProps> = ({ dataset }) => {
   };
 
   return (
-    <div className="scatterplot-section">
+    <>
       <h2>Scatter Plot</h2>
       <div className="dropdown-container">
         <div className="axis-select">
@@ -88,7 +88,7 @@ const ScatterPlotSection: React.FC<ScatterPlotSectionProps> = ({ dataset }) => {
           selectedGenres={selectedGenres}
         />
       </div>
-    </div>
+    </>
   );
 };
 

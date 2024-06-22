@@ -40,68 +40,69 @@ const HeatmapD3: React.FC<HeatmapD3Props> = ({ data, factors }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
-    if (svgRef.current && factors.length > 0) {
-      const svg = d3.select(svgRef.current);
-      svg.selectAll("*").remove(); // Clear previous content
-
-      const margin = { top: 50, right: 50, bottom: 100, left: 100 };
-      const width = 700 - margin.left - margin.right;
-      const height = 700 - margin.top - margin.bottom;
-
-      const x = d3.scaleBand().range([0, width]).domain(factors).padding(0.01);
-
-      const y = d3.scaleBand().range([height, 0]).domain(factors).padding(0.01);
-
-      const color = d3.scaleSequential(d3.interpolateRdBu).domain([-1, 1]);
-
-      const xAxis = d3.axisBottom(x);
-      const yAxis = d3.axisLeft(y);
-
-      const svgElement = svg
-        .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
-
-      const correlations = calculateCorrelations(
-        data,
-        factors as (keyof Entry)[],
-      );
-
-      svgElement
-        .append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(xAxis)
-        .selectAll("text")
-        .attr("transform", "rotate(90)")
-        .attr("x", 9)
-        .attr("y", 0)
-        .attr("dy", ".35em")
-        .style("text-anchor", "start");
-
-      svgElement.append("g").call(yAxis);
-
-      svgElement
-        .selectAll()
-        .data(correlations)
-        .enter()
-        .append("rect")
-        .attr("x", (d) => x(d.factor1)!)
-        .attr("y", (d) => y(d.factor2)!)
-        .attr("width", x.bandwidth())
-        .attr("height", y.bandwidth())
-        .style("fill", (d) => color(d.value));
-
-      svgElement
-        .selectAll()
-        .data(correlations)
-        .enter()
-        .append("text")
-        .attr("x", (d) => x(d.factor1)! + x.bandwidth() / 2)
-        .attr("y", (d) => y(d.factor2)! + y.bandwidth() / 2)
-        .attr("dy", ".35em")
-        .attr("text-anchor", "middle")
-        .text((d) => d.value.toFixed(2))
-        .style("fill", "black");
+    if (svgRef.current === null || factors.length <= 0) {
+      return;
     }
+
+    const svg = d3.select(svgRef.current);
+    svg.selectAll("*").remove(); // Clear previous content
+
+    const margin = { top: 50, right: 50, bottom: 100, left: 100 };
+    const width = 700 - margin.left - margin.right;
+    const height = 700 - margin.top - margin.bottom;
+
+    const x = d3.scaleBand().range([0, width]).domain(factors).padding(0.01);
+    const y = d3.scaleBand().range([height, 0]).domain(factors).padding(0.01);
+
+    const color = d3.scaleSequential(d3.interpolateRdBu).domain([-1, 1]);
+
+    const xAxis = d3.axisBottom(x);
+    const yAxis = d3.axisLeft(y);
+
+    const svgElement = svg
+      .append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const correlations = calculateCorrelations(
+      data,
+      factors as (keyof Entry)[],
+    );
+
+    svgElement
+      .append("g")
+      .attr("transform", `translate(0,${height})`)
+      .call(xAxis)
+      .selectAll("text")
+      .attr("transform", "rotate(45)")
+      .attr("x", 9)
+      .attr("y", 0)
+      .attr("dy", ".35em")
+      .style("text-anchor", "start");
+
+    svgElement.append("g").call(yAxis);
+
+    svgElement
+      .selectAll()
+      .data(correlations)
+      .enter()
+      .append("rect")
+      .attr("x", (d) => x(d.factor1)!)
+      .attr("y", (d) => y(d.factor2)!)
+      .attr("width", x.bandwidth())
+      .attr("height", y.bandwidth())
+      .style("fill", (d) => color(d.value));
+
+    svgElement
+      .selectAll()
+      .data(correlations)
+      .enter()
+      .append("text")
+      .attr("x", (d) => x(d.factor1)! + x.bandwidth() / 2)
+      .attr("y", (d) => y(d.factor2)! + y.bandwidth() / 2)
+      .attr("dy", ".35em")
+      .attr("text-anchor", "middle")
+      .text((d) => d.value.toFixed(2))
+      .style("fill", "black");
   }, [data, factors]);
 
   return <svg ref={svgRef} width="700" height="700"></svg>;
