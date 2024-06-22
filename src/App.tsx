@@ -5,13 +5,13 @@ import * as d3 from "d3";
 import { Entry, preprocessDataset } from "./dataset";
 import { useEffect, useState } from "react";
 
-import Footer from "./components/footer-section/footer.tsx";
-import Introduction from "./components/introduction-section/introduction.tsx";
-import RidgeLineSection from "./components/ridge-line-section/ridge-line-section.tsx";
-import SpiderSection from "./components/spider-section/spider-section.tsx";
-import BoxPlotSection from "./components/boxplot-section/boxplot-section.tsx";
-import HeatmapSection from "./components/heatmap-section/heatmap-section.tsx";
-import CorrelationSection from "./components/correlation-section/heatmap-section.tsx";
+import Footer from "./components/sections/footer-section/footer.tsx";
+import Introduction from "./components/sections/introduction-section/introduction.tsx";
+import RidgeLineSection from "./components/sections/ridge-line-section/ridge-line-section.tsx";
+import SpiderSection from "./components/sections/spider-section/spider-section.tsx";
+import BoxPlotSection from "./components/sections/boxplot-section/boxplot-section.tsx";
+import HeatmapSection from "./components/sections/heatmap-section/heatmap-section.tsx";
+import CorrelationSection from "./components/sections/correlation-section/heatmap-section.tsx";
 
 function App() {
   const [track, setTrack] = useState(
@@ -40,14 +40,11 @@ function App() {
       <div className="section" id="section4">
         <HeatmapSection dataset={dataset} />
       </div>
-      <div className="section" id="section3">
-        <RidgeLineSection dataset={dataset} />
-      </div>
       <div className="section" id="section4">
         <BoxPlotSection dataset={dataset} />
       </div>
-      <div className="section" id="section5">
-        <HeatmapSection dataset={dataset} />
+      <div className="section" id="section3">
+        <RidgeLineSection dataset={dataset} />
       </div>
       <div className="section" id="section6">
         <CorrelationSection dataset={dataset} />

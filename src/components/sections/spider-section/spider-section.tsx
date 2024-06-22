@@ -1,7 +1,6 @@
 import React from "react";
 import "./spider-section.css"; // Import CSS for styling
-import LinePlot from "../../visualizations/LinePlot/LinePlot";
-import SpiderChart from "../../../SpiderChart/SpiderChart";
+import SpiderChart from "../../visualizations/SpiderChart/SpiderChart";
 import Dropdown from "../../Dropdown/dropdown";
 
 interface SpiderSectionProps {

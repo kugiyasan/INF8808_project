@@ -1,6 +1,6 @@
 import Dropdown from "../../Dropdown/dropdown";
 import React from "react";
-import RidgelinePlot from "../../../RidgeLine/RidgeLine";
+import RidgelinePlot from "../../visualizations/RidgeLine/RidgeLine";
 import "./ridge-line-section.css";
 
 interface RidgeLineSectionProps {
