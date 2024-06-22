@@ -62,8 +62,8 @@ const Dropdown: React.FC<DropdownProps> = ({
       style={customStyles}
       onSelect={updateSelectedValues}
       onRemove={updateSelectedValues}
-      placeholder={placeholder ? placeholder : "Select"}
-      selectedValues={preSelected ? preSelected : []}
+      placeholder={placeholder ?? "Select"}
+      selectedValues={preSelected ?? []}
     />
   );
 };

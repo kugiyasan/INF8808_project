@@ -71,7 +71,7 @@ function RadarChart(
 
   const allAxis = data[0].map((i) => i.axis);
   const radius = Math.min(cfg.w / 2, cfg.h / 2); //Radius of the outermost circle
-  const Format = d3.format("%"); //Percentage formatting
+  const Format = d3.format(".0%"); //Percentage formatting
   const angleSlice = (Math.PI * 2) / allAxis.length; //The width in radians of each "slice"
 
   const rScale = d3.scaleLinear().range([0, radius]).domain([0, maxValue]);
@@ -97,9 +97,10 @@ function RadarChart(
     .attr("x", cfg.w / 2 + cfg.margin.left)
     .attr("y", cfg.margin.top - 80)
     .attr("text-anchor", "middle")
+    .attr("fill", "white")
     .style("font-size", "24px")
     .style("font-weight", "bold")
-    .text("Title of the spiderchart ");
+    .text("Comparison of various songs stats by genre");
 
   //Append a g element
   const g = svg
@@ -198,6 +199,7 @@ function RadarChart(
     .append("text")
     .attr("class", "legend")
     .style("font-size", "11px")
+    .style("fill", "white")
     .attr("text-anchor", "middle")
     .attr("dy", "0.35em")
     .attr("x", function (d, i) {
@@ -212,9 +214,7 @@ function RadarChart(
         Math.sin(angleSlice * i - Math.PI / 2)
       );
     })
-    .text(function (d) {
-      return d;
-    })
+    .text((d) => d)
     .call(wrap, cfg.wrapWidth);
 
   /////////////////////////////////////////////////////////
@@ -289,9 +289,7 @@ function RadarChart(
   //Append the circles
   blobWrapper
     .selectAll(".radarCircle")
-    .data(function (d) {
-      return d;
-    })
+    .data((d) => d)
     .enter()
     .append("circle")
     .attr("class", "radarCircle")
@@ -333,14 +331,16 @@ function RadarChart(
     })
     .style("fill", "none")
     .style("pointer-events", "all")
-    .on("mouseover", function (d) {
+    .on("mouseover", function (e, d) {
       const newX = parseFloat(d3.select(this).attr("cx")) - 10;
       const newY = parseFloat(d3.select(this).attr("cy")) - 10;
 
       tooltip
         .attr("x", newX)
         .attr("y", newY)
-        .text(Format(d.value))
+        .attr("fill", "white")
+        .style("font-weight", "bold")
+        .text(d.value.toFixed(2))
         .transition()
         .duration(200)
         .style("opacity", 1);

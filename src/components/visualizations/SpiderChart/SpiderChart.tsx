@@ -2,6 +2,7 @@ import { FC, useEffect, useRef } from "react";
 import RadarChart from "./RadarChart";
 import * as d3 from "d3";
 import { Entry } from "../../../dataset";
+import { GENRES } from "../../../genres";
 
 interface SpiderChartProps {
   dataset: Entry[];
@@ -52,6 +53,41 @@ const getSpiderChartData = (
   return { data, genres };
 };
 
+const createLegend = (
+  currentRef: HTMLInputElement | null,
+  colorScale: d3.ScaleOrdinal<string, string>,
+) => {
+  const legendContainer = d3.select(currentRef);
+  if (legendContainer.select("h2").empty()) {
+    legendContainer.append("h2").text("Legend");
+  }
+
+  const colorLegend = legendContainer
+    .selectAll(".color-legend")
+    .data(GENRES.slice(0, 5))
+    .enter()
+    .append("div")
+    .attr("class", "color-legend")
+    .style("display", "flex")
+    .style("align-items", "center")
+    .style("margin-bottom", "4px");
+  colorLegend
+    .append("svg")
+    .attr("width", 10)
+    .attr("height", 10)
+    .style("margin-right", "5px")
+    .append("circle")
+    .attr("cx", 5)
+    .attr("cy", 5)
+    .attr("r", 4)
+    .style("fill", (_d, i) => colorScale(i as unknown as string));
+
+  colorLegend
+    .append("span")
+    .style("margin-left", "5px")
+    .text((d) => d.name);
+};
+
 const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
   const margin = { top: 100, right: 100, bottom: 100, left: 100 };
   const width =
@@ -78,40 +114,8 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
     };
 
     RadarChart(ref.current, data.slice(0, 5), radarChartOptions);
-    createLegend();
+    createLegend(ref.current, colorScale);
   }, []);
-
-  const createLegend = () => {
-    const legendContainer = d3.select(ref.current);
-    if (legendContainer.select("h2").empty()) {
-      legendContainer.append("h2").text("Legend");
-    }
-
-    const colorLegend = legendContainer
-      .selectAll(".color-legend")
-      .data(genres.slice(0, 5))
-      .enter()
-      .append("div")
-      .attr("class", "color-legend")
-      .style("display", "flex")
-      .style("align-items", "center")
-      .style("margin-bottom", "4px");
-    colorLegend
-      .append("svg")
-      .attr("width", 10)
-      .attr("height", 10)
-      .style("margin-right", "5px")
-      .append("circle")
-      .attr("cx", 5)
-      .attr("cy", 5)
-      .attr("r", 4)
-      .style("fill", (_d, i) => colorScale(i as unknown as string));
-
-    colorLegend
-      .append("span")
-      .style("margin-left", "5px")
-      .text((d) => d);
-  };
 
   return <div ref={ref}></div>;
 };
