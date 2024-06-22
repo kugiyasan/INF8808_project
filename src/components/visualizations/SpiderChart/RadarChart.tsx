@@ -100,7 +100,7 @@ function RadarChart(
     .attr("fill", "white")
     .style("font-size", "24px")
     .style("font-weight", "bold")
-    .text("Comparison of various songs stats by genre");
+    .text("Comparison of various songs' stats by genre");
 
   //Append a g element
   const g = svg
@@ -163,7 +163,7 @@ function RadarChart(
     })
     .attr("dy", "0.4em")
     .style("font-size", "10px")
-    .attr("fill", "#737373")
+    .attr("fill", "white")
     .text(function (d) {
       return Format((maxValue * d) / cfg.levels);
     });
@@ -340,7 +340,7 @@ function RadarChart(
         .attr("y", newY)
         .attr("fill", "white")
         .style("font-weight", "bold")
-        .text(d.value.toFixed(2))
+        .text(Format(d.value))
         .transition()
         .duration(200)
         .style("opacity", 1);
