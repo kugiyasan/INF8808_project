@@ -10,8 +10,16 @@ interface SpiderSectionProps {
 
 
 const SpiderSection: React.FC<SpiderSectionProps> = ({ dataset }) => {
+  const preSelectedOptions = [
+    { name: 'Rock' }, { name: 'Pop' }, { name: 'Classical' }
+];
     const [genre, setGenre] = React.useState('');
-    const options = [{name: 'Rock'}, {name: 'Pop'}, {name: 'Hip-Hop'}, {name: 'Jazz'}, {name: 'Classical'}, {name: 'Electronic'}, {name: 'R&B'}, {name: 'Country'}, {name: 'Folk'}, {name: 'Reggae'}, {name: 'Blues'}, {name: 'Metal'}, {name: 'Punk'}, {name: 'Disco'}, {name: 'Soul'}, {name: 'Funk'}, {name: 'Techno'}, {name: 'House'}, {name: 'Dance'}, {name: 'Trance'}, {name: 'Dubstep'}, {name: 'Drum and Bass'}]
+    const options = [
+      { name: 'Rock' }, { name: 'Pop' }, { name: 'Hip-Hop' }, { name: 'Jazz' }, { name: 'Classical' }, { name: 'Electronic' },
+      { name: 'R-N-B' }, { name: 'Country' }, { name: 'Folk' }, { name: 'Reggae' }, { name: 'Blues' }, { name: 'Metal' },
+      { name: 'Punk' }, { name: 'Disco' }, { name: 'Soul' }, { name: 'Funk' }, { name: 'Techno' }, { name: 'House' },
+      { name: 'Dance' }, { name: 'Trance' }, { name: 'Dubstep' }, { name: 'Drum and Bass' }
+  ];
   return (
     <div className="spider-section">
         <h2>{genre}</h2>
