@@ -18,8 +18,10 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
   const [selectedGenres, setSelectedGenres] = React.useState<string[]>(
     preSelectedOptions.map((genre) => genre.name.toLowerCase()),
   );
-  const [kernelBandwidth, setKernelBandwidth] = React.useState<number>(7);
-  const [numTicks, setNumTicks] = React.useState<number>(40);
+  // const [kernelBandwidth, setKernelBandwidth] = React.useState<number>(7);
+  // const [numTicks, setNumTicks] = React.useState<number>(40);
+  const kernelBandwidth = 7;
+  const numTicks = 40;
 
   const options = [
     { name: "Rock" },

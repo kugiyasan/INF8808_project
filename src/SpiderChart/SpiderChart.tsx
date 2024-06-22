@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import RadarChart from "./RadarChart";
 import * as d3 from "d3";
 import { Entry } from "../dataset";
@@ -105,7 +105,7 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
       .attr("cx", 5)
       .attr("cy", 5)
       .attr("r", 4)
-      .style("fill", (d, i) => colorScale(i));
+      .style("fill", (_d, i) => colorScale(i as unknown as string));
 
     colorLegend
       .append("span")
