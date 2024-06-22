@@ -1,13 +1,3 @@
-.footer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Adjust as needed */
-  width: 100vw;
-  background-color: #525252;
-}
-
 .row {
   display: flex;
 }
