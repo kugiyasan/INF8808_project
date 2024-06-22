@@ -61,7 +61,10 @@ const HeatmapD3: React.FC<HeatmapD3Props> = ({ data, factors }) => {
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-      const correlations = calculateCorrelations(data, factors as (keyof Entry)[]);
+      const correlations = calculateCorrelations(
+        data,
+        factors as (keyof Entry)[],
+      );
 
       svgElement
         .append("g")
