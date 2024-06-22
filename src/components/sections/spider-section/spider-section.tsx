@@ -2,9 +2,10 @@ import React from "react";
 import SpiderChart from "../../visualizations/SpiderChart/SpiderChart";
 import Dropdown from "../../Dropdown/dropdown";
 import { GENRES } from "../../../genres";
+import { Entry } from "../../../dataset";
 
 interface SpiderSectionProps {
-  dataset?: any[];
+  dataset: Entry[];
 }
 
 const SpiderSection: React.FC<SpiderSectionProps> = ({ dataset }) => {

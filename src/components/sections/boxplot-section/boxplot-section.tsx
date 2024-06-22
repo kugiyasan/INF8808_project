@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../Dropdown/dropdown";
 import BoxPlotD3 from "../../visualizations/BoxPlot/BoxPlot";
+import { Entry } from "../../../dataset";
 
 interface BoxPlotSectionProps {
-  dataset?: any[];
+  dataset: Entry[];
 }
 
 const BoxPlotSection: React.FC<BoxPlotSectionProps> = ({ dataset }) => {

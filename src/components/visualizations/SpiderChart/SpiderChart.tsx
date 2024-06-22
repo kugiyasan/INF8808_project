@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef } from "react";
 import RadarChart from "./RadarChart";
 import * as d3 from "d3";
-import { Entry } from "../dataset";
+import { Entry } from "../../../dataset";
 
 interface SpiderChartProps {
   dataset: Entry[];

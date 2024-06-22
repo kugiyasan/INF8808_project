@@ -1,8 +1,9 @@
 import { FC } from "react";
 import CorrelationHeatmap from "./Heatmap";
+import { Entry } from "../../../dataset";
 
 interface CorrelationSectionProps {
-  dataset?: any[];
+  dataset: Entry[];
 }
 
 const CorrelationSection: FC<CorrelationSectionProps> = ({ dataset }) => {

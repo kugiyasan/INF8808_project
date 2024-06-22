@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Dropdown from "../../Dropdown/dropdown";
 import HeatmapD3 from "../../visualizations/HeatMap/HeatMap";
+import { Entry } from "../../../dataset";
 
 interface HeatmapSectionProps {
-  dataset?: any[];
+  dataset: Entry[];
 }
 
 const HeatmapSection: React.FC<HeatmapSectionProps> = ({ dataset }) => {

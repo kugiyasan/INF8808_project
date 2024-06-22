@@ -30,6 +30,17 @@ function App() {
 
   console.log(dataset === undefined ? undefined : dataset[0]);
 
+  if (dataset === undefined) {
+    return (
+      <div className="App">
+        <div className="section">
+          <Introduction />
+          <h1>Loading...</h1>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="App">
       <div className="section">

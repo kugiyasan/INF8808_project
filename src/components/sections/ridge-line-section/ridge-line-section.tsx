@@ -2,9 +2,10 @@ import Dropdown from "../../Dropdown/dropdown";
 import React from "react";
 import RidgelinePlot from "../../visualizations/RidgeLine/RidgeLine";
 import { GENRES } from "../../../genres";
+import { Entry } from "../../../dataset";
 
 interface RidgeLineSectionProps {
-  dataset?: any[];
+  dataset: Entry[];
 }
 
 const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
