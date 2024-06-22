@@ -32,28 +32,28 @@ function App() {
 
   return (
     <div className="App">
-      <div className="section" id="section1">
+      <div className="section">
         <Introduction />
       </div>
-      <div className="section" id="section2">
+      <div className="section">
         <SpiderSection dataset={dataset} />
       </div>
-      <div className="section" id="section4">
+      <div className="section">
         <HeatmapSection dataset={dataset} />
       </div>
-      <div className="section" id="section4">
+      <div className="section">
         <BoxPlotSection dataset={dataset} />
       </div>
-      <div className="section" id="section3">
+      <div className="section">
         <RidgeLineSection dataset={dataset} />
       </div>
-      <div className="section" id="section6">
+      <div className="section">
         <CorrelationSection dataset={dataset} />
       </div>
-      <div className="section" id="section7">
+      <div className="section">
         <ScatterPlotSection dataset={dataset} />
       </div>
-      <div className="section" id="section8">
+      <div className="section">
         <Footer setTrackId={setTrack} trackId={track} />
       </div>
     </div>
