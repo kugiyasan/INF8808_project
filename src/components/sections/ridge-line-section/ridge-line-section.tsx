@@ -1,6 +1,7 @@
 import Dropdown from "../../Dropdown/dropdown";
 import React from "react";
 import RidgelinePlot from "../../visualizations/RidgeLine/RidgeLine";
+import { GENRES } from "../../../genres";
 
 interface RidgeLineSectionProps {
   dataset?: any[];
@@ -8,11 +9,11 @@ interface RidgeLineSectionProps {
 
 const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
   const preSelectedOptions = [
-    { name: "Rock" },
-    { name: "Pop" },
-    { name: "Hip-Hop" },
-    { name: "Jazz" },
-    { name: "Classical" },
+    { name: "rock" },
+    { name: "pop" },
+    { name: "hip-hop" },
+    { name: "jazz" },
+    { name: "classical" },
   ];
   const [selectedGenres, setSelectedGenres] = React.useState<string[]>(
     preSelectedOptions.map((genre) => genre.name.toLowerCase()),
@@ -21,31 +22,6 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
   // const [numTicks, setNumTicks] = React.useState<number>(40);
   const kernelBandwidth = 7;
   const numTicks = 40;
-
-  const options = [
-    { name: "Rock" },
-    { name: "Pop" },
-    { name: "Hip-Hop" },
-    { name: "Jazz" },
-    { name: "Classical" },
-    { name: "Electronic" },
-    { name: "R-N-B" },
-    { name: "Country" },
-    { name: "Folk" },
-    { name: "Reggae" },
-    { name: "Blues" },
-    { name: "Metal" },
-    { name: "Punk" },
-    { name: "Disco" },
-    { name: "Soul" },
-    { name: "Funk" },
-    { name: "Techno" },
-    { name: "House" },
-    { name: "Dance" },
-    { name: "Trance" },
-    { name: "Dubstep" },
-    { name: "Drum and Bass" },
-  ];
 
   const handleUpdateGenres = (selected: string[]) => {
     setSelectedGenres(selected.map((genre) => genre.toLowerCase()));
@@ -56,7 +32,7 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
       <h2>Selected Genres: {selectedGenres.join(", ")}</h2>
       <Dropdown
         onUpdate={handleUpdateGenres}
-        options={options}
+        options={GENRES}
         placeholder={"Select up to 5 genres"}
         limit={5}
         singleSelect={false}
