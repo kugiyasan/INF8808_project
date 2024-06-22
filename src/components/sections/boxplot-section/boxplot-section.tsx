@@ -36,9 +36,7 @@ const BoxPlotSection: React.FC<BoxPlotSectionProps> = ({ dataset }) => {
         limit={10}
       />
       <div className="boxplot-container">
-        {dataset === undefined ? null : (
-          <BoxPlotD3 data={dataset} genres={genres} />
-        )}
+        <BoxPlotD3 data={dataset} genres={genres} />
       </div>
     </div>
   );

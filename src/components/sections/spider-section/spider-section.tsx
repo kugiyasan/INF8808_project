@@ -20,7 +20,7 @@ const SpiderSection: React.FC<SpiderSectionProps> = ({ dataset }) => {
         limit={5}
       />
       <div className="visual-container">
-        {dataset === undefined ? null : <SpiderChart dataset={dataset} />}
+        <SpiderChart dataset={dataset} />
       </div>
     </div>
   );

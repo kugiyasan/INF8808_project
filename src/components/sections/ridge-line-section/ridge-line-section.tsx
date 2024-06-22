@@ -63,14 +63,12 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
             </div> */}
 
       <div className="visual-container">
-        {dataset === undefined ? null : (
-          <RidgelinePlot
-            data={dataset}
-            selectedGenres={selectedGenres}
-            kernelBandwidth={kernelBandwidth}
-            numTicks={numTicks}
-          />
-        )}
+        <RidgelinePlot
+          data={dataset}
+          selectedGenres={selectedGenres}
+          kernelBandwidth={kernelBandwidth}
+          numTicks={numTicks}
+        />
       </div>
     </div>
   );

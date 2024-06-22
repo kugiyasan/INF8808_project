@@ -5,7 +5,7 @@ import "./scatterplot-section.css";
 import { Entry } from "../../../dataset";
 
 interface ScatterPlotSectionProps {
-  dataset?: Entry[];
+  dataset: Entry[];
 }
 
 const ScatterPlotSection: React.FC<ScatterPlotSectionProps> = ({ dataset }) => {
@@ -24,8 +24,9 @@ const ScatterPlotSection: React.FC<ScatterPlotSectionProps> = ({ dataset }) => {
   ];
 
   const genreOptions = dataset
-    ? Array.from(new Set(dataset.map(d => d.track_genre)))
-      .map(genre => ({ name: genre }))
+    ? Array.from(new Set(dataset.map((d) => d.track_genre))).map((genre) => ({
+        name: genre,
+      }))
     : [];
 
   const handleXAxisSelection = (axis: string) => {
@@ -76,13 +77,16 @@ const ScatterPlotSection: React.FC<ScatterPlotSectionProps> = ({ dataset }) => {
           onUpdate={handleGenreSelection}
           options={genreOptions}
           placeholder="Select Genres"
-          preSelected={selectedGenres.map(genre => ({ name: genre }))}
+          preSelected={selectedGenres.map((genre) => ({ name: genre }))}
         />
       </div>
       <div className="scatterplot-container">
-        {dataset === undefined ? null : (
-          <ScatterPlot data={dataset} xAxis={xAxis} yAxis={yAxis} selectedGenres={selectedGenres} />
-        )}
+        <ScatterPlot
+          data={dataset}
+          xAxis={xAxis}
+          yAxis={yAxis}
+          selectedGenres={selectedGenres}
+        />
       </div>
     </div>
   );

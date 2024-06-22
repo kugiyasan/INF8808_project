@@ -43,9 +43,7 @@ const HeatmapSection: React.FC<HeatmapSectionProps> = ({ dataset }) => {
         limit={13}
       />
       <div className="heatmap-container">
-        {dataset === undefined ? null : (
-          <HeatmapD3 data={dataset} factors={factors} />
-        )}
+        <HeatmapD3 data={dataset} factors={factors} />
       </div>
     </div>
   );
