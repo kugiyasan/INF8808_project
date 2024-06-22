@@ -1,10 +1,40 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { Entry } from "../../../dataset";
 
 interface HeatmapD3Props {
-  data: any[];
+  data: Entry[];
   factors: string[];
 }
+
+const calculateCorrelations = (data: Entry[], factors: (keyof Entry)[]) => {
+  const correlations = [];
+  for (const factor1 of factors) {
+    for (const factor2 of factors) {
+      const correlation = calculateCorrelation(
+        data.map((d) => d[factor1]) as number[],
+        data.map((d) => d[factor2]) as number[],
+      );
+      correlations.push({ factor1, factor2, value: correlation });
+    }
+  }
+  return correlations;
+};
+
+const calculateCorrelation = (x: number[], y: number[]): number => {
+  const n = x.length;
+  const meanX = d3.mean(x);
+  const meanY = d3.mean(y);
+  const covariance =
+    d3.sum(x.map((xi, i) => (xi - meanX!) * (y[i] - meanY!))) / n;
+  const stdDevX = Math.sqrt(
+    d3.sum(x.map((xi) => Math.pow(xi - meanX!, 2))) / n,
+  );
+  const stdDevY = Math.sqrt(
+    d3.sum(y.map((yi) => Math.pow(yi - meanY!, 2))) / n,
+  );
+  return covariance / (stdDevX * stdDevY);
+};
 
 const HeatmapD3: React.FC<HeatmapD3Props> = ({ data, factors }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -70,37 +100,6 @@ const HeatmapD3: React.FC<HeatmapD3Props> = ({ data, factors }) => {
         .style("fill", "black");
     }
   }, [data, factors]);
-
-  const calculateCorrelations = (data: any[], factors: string[]) => {
-    const correlations = [];
-    for (let i = 0; i < factors.length; i++) {
-      for (let j = 0; j < factors.length; j++) {
-        const factor1 = factors[i];
-        const factor2 = factors[j];
-        const correlation = calculateCorrelation(
-          data.map((d) => d[factor1]),
-          data.map((d) => d[factor2]),
-        );
-        correlations.push({ factor1, factor2, value: correlation });
-      }
-    }
-    return correlations;
-  };
-
-  const calculateCorrelation = (x: number[], y: number[]): number => {
-    const n = x.length;
-    const meanX = d3.mean(x);
-    const meanY = d3.mean(y);
-    const covariance =
-      d3.sum(x.map((xi, i) => (xi - meanX!) * (y[i] - meanY!))) / n;
-    const stdDevX = Math.sqrt(
-      d3.sum(x.map((xi) => Math.pow(xi - meanX!, 2))) / n,
-    );
-    const stdDevY = Math.sqrt(
-      d3.sum(y.map((yi) => Math.pow(yi - meanY!, 2))) / n,
-    );
-    return covariance / (stdDevX * stdDevY);
-  };
 
   return <svg ref={svgRef} width="700" height="700"></svg>;
 };

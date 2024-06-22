@@ -34,7 +34,6 @@ const BoxPlotSection: React.FC<BoxPlotSectionProps> = ({ dataset }) => {
         options={options}
         placeholder="Select up to 10 genres"
         limit={10}
-        singleSelect={false}
       />
       <div className="boxplot-container">
         {dataset === undefined ? null : (

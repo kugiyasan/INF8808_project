@@ -76,7 +76,6 @@ const ScatterPlotSection: React.FC<ScatterPlotSectionProps> = ({ dataset }) => {
           onUpdate={handleGenreSelection}
           options={genreOptions}
           placeholder="Select Genres"
-          singleSelect={false}
           preSelected={selectedGenres.map(genre => ({ name: genre }))}
         />
       </div>

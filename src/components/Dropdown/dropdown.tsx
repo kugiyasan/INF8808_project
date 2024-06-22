@@ -2,13 +2,16 @@ import React from "react";
 import Multiselect from "multiselect-react-dropdown";
 import "./dropdown.css"; // Import CSS for styling
 
+interface Item {
+  name: string;
+}
+
 interface DropdownProps {
   options: object[];
-  onUpdate: (selected: any) => void;
+  onUpdate: (selected: string[]) => void;
   placeholder?: string;
-  singleSelect: boolean;
   limit?: number;
-  preSelected?: object[];
+  preSelected?: Item[];
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -47,13 +50,14 @@ const Dropdown: React.FC<DropdownProps> = ({
     },
   };
 
-  const updateSelectedValues = (selectedList: any) => {
-    onUpdate(selectedList.map((item: any) => item.name));
+  const updateSelectedValues = (selectedList: Item[]) => {
+    onUpdate(selectedList.map((item) => item.name));
   };
+
   return (
     <Multiselect
       options={options}
-      selectionLimit={limit ? limit : 100}
+      selectionLimit={limit ?? 100}
       displayValue="name"
       style={customStyles}
       onSelect={updateSelectedValues}

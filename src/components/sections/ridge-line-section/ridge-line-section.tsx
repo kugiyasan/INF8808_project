@@ -36,7 +36,6 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
         options={GENRES}
         placeholder={"Select up to 5 genres"}
         limit={5}
-        singleSelect={false}
         preSelected={preSelectedOptions}
       />
 

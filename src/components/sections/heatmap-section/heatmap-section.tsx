@@ -41,7 +41,6 @@ const HeatmapSection: React.FC<HeatmapSectionProps> = ({ dataset }) => {
         options={options}
         placeholder="Select up to 13 factors"
         limit={13}
-        singleSelect={false}
       />
       <div className="heatmap-container">
         {dataset === undefined ? null : (

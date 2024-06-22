@@ -9,7 +9,7 @@ interface SpiderSectionProps {
 }
 
 const SpiderSection: React.FC<SpiderSectionProps> = ({ dataset }) => {
-  const [genre, setGenre] = React.useState("");
+  const [genre, setGenre] = React.useState<string[]>([]);
   return (
     <div className="spider-section">
       <h2>{genre}</h2>
@@ -18,7 +18,6 @@ const SpiderSection: React.FC<SpiderSectionProps> = ({ dataset }) => {
         options={GENRES}
         placeholder={"Select up to 5 genres"}
         limit={5}
-        singleSelect={false}
       />
       <div className="visual-container">
         {dataset === undefined ? null : <SpiderChart dataset={dataset} />}
