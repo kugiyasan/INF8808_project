@@ -19,9 +19,7 @@ const HeatmapD3: React.FC<HeatmapD3Props> = ({ data, factors }) => {
       const height = 700 - margin.top - margin.bottom;
 
       const x = d3.scaleBand().range([0, width]).domain(factors).padding(0.01);
-
       const y = d3.scaleBand().range([height, 0]).domain(factors).padding(0.01);
-
       const color = d3.scaleSequential(d3.interpolateRdBu).domain([-1, 1]);
 
       const xAxis = d3.axisBottom(x);
@@ -38,16 +36,16 @@ const HeatmapD3: React.FC<HeatmapD3Props> = ({ data, factors }) => {
         .attr("transform", `translate(0,${height})`)
         .call(xAxis)
         .selectAll("text")
-        .attr("transform", "rotate(90)")
-        .attr("x", 9)
-        .attr("y", 0)
+        .attr("transform", "rotate(-45)")
+        .attr("x", -10)
+        .attr("y", 10)
         .attr("dy", ".35em")
-        .style("text-anchor", "start");
+        .style("text-anchor", "end");
 
       svgElement.append("g").call(yAxis);
 
       svgElement
-        .selectAll()
+        .selectAll("rect")
         .data(correlations)
         .enter()
         .append("rect")
@@ -58,10 +56,11 @@ const HeatmapD3: React.FC<HeatmapD3Props> = ({ data, factors }) => {
         .style("fill", (d) => color(d.value));
 
       svgElement
-        .selectAll()
+        .selectAll("text.correlation")
         .data(correlations)
         .enter()
         .append("text")
+        .attr("class", "correlation")
         .attr("x", (d) => x(d.factor1)! + x.bandwidth() / 2)
         .attr("y", (d) => y(d.factor2)! + y.bandwidth() / 2)
         .attr("dy", ".35em")
@@ -102,7 +101,11 @@ const HeatmapD3: React.FC<HeatmapD3Props> = ({ data, factors }) => {
     return covariance / (stdDevX * stdDevY);
   };
 
-  return <svg ref={svgRef} width="700" height="700"></svg>;
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <svg ref={svgRef} width="700" height="700"></svg>
+    </div>
+  );
 };
 
 export default HeatmapD3;
