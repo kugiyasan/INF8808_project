@@ -12,6 +12,7 @@ import SpiderSection from "./components/sections/spider-section/spider-section.t
 import BoxPlotSection from "./components/sections/boxplot-section/boxplot-section.tsx";
 import HeatmapSection from "./components/sections/heatmap-section/heatmap-section.tsx";
 import CorrelationSection from "./components/sections/correlation-section/heatmap-section.tsx";
+import ScatterPlotSection from "./components/sections/scatterplot-section/scatterplot-section.tsx";
 
 function App() {
   const [track, setTrack] = useState(
@@ -50,6 +51,9 @@ function App() {
         <CorrelationSection dataset={dataset} />
       </div>
       <div className="section" id="section7">
+        <ScatterPlotSection dataset={dataset} />
+      </div>
+      <div className="section" id="section8">
         <Footer setTrackId={setTrack} trackId={track} />
       </div>
     </div>
