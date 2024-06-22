@@ -1,7 +1,6 @@
 import Dropdown from "../../Dropdown/dropdown";
 import React from "react";
 import RidgelinePlot from "../../visualizations/RidgeLine/RidgeLine";
-import "./ridge-line-section.css";
 
 interface RidgeLineSectionProps {
   dataset?: any[];

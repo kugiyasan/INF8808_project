@@ -1,5 +1,4 @@
 import React from "react";
-import "./spider-section.css"; // Import CSS for styling
 import SpiderChart from "../../visualizations/SpiderChart/SpiderChart";
 import Dropdown from "../../Dropdown/dropdown";
 

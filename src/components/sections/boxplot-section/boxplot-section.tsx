@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../Dropdown/dropdown";
 import BoxPlotD3 from "../../visualizations/BoxPlot/BoxPlot";
-import "./boxplot-section.css";
 
 interface BoxPlotSectionProps {
   dataset?: any[];

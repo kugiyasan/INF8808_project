@@ -1,5 +1,4 @@
 import { FC } from "react";
-import "./correlation-section.css";
 import CorrelationHeatmap from "./Heatmap";
 
 interface CorrelationSectionProps {
