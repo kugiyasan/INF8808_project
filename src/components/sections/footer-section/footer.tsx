@@ -1,6 +1,6 @@
 import React from "react";
 import "./footer.css"; // Import CSS for styling
-import ProfileCard from "../profile-card/profile-card";
+import ProfileCard from "../../profile-card/profile-card";
 
 interface FooterProps {
   trackId: string;

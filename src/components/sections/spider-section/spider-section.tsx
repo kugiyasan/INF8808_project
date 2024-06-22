@@ -1,8 +1,8 @@
 import React from "react";
 import "./spider-section.css"; // Import CSS for styling
-import LinePlot from "../../LinePlot/LinePlot";
-import SpiderChart from "../../SpiderChart/SpiderChart";
-import Dropdown from "../Dropdown/dropdown";
+import LinePlot from "../../visualizations/LinePlot/LinePlot";
+import SpiderChart from "../../../SpiderChart/SpiderChart";
+import Dropdown from "../../Dropdown/dropdown";
 
 interface SpiderSectionProps {
   dataset?: any[];
@@ -45,7 +45,6 @@ const SpiderSection: React.FC<SpiderSectionProps> = ({ dataset }) => {
         singleSelect={false}
       />
       <div className="visual-container">
-        <LinePlot data={[1, 5, 143, 76, 34, 87]} />
         {dataset === undefined ? null : <SpiderChart dataset={dataset} />}
       </div>
     </div>
