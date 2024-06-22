@@ -29,13 +29,15 @@ const BoxPlotSection: React.FC<BoxPlotSectionProps> = ({ dataset }) => {
   return (
     <div className="boxplot-section">
       <h2>Genres: {genres.join(", ")}</h2>
-      <Dropdown
-        onUpdate={handleGenreSelection}
-        options={options}
-        placeholder="Select up to 10 genres"
-        limit={10}
-        singleSelect={false}
-      />
+      <div className="dropdown-container">
+        <Dropdown
+          onUpdate={handleGenreSelection}
+          options={options}
+          placeholder="Select up to 10 genres"
+          limit={10}
+          singleSelect={false}
+        />
+      </div>
       <div className="boxplot-container">
         {dataset === undefined ? null : (
           <BoxPlotD3 data={dataset} genres={genres} />
