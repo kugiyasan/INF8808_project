@@ -58,11 +58,22 @@ const createLegend = (
   colorScale: d3.ScaleOrdinal<string, string>,
 ) => {
   const legendContainer = d3.select(currentRef);
-  if (legendContainer.select("h2").empty()) {
-    legendContainer.append("h2").text("Legend");
-  }
 
-  const colorLegend = legendContainer
+  legendContainer.select(".legend-container").remove();
+
+  const legendDiv = legendContainer
+    .append("div")
+    .attr("class", "legend-container")
+    .style("position", "absolute")
+    .style("bottom", "40px")
+    .style("left", "-100px")
+    .style("background", "rgba(0, 0, 0, 0.4)")
+    .style("padding", "10px")
+    .style("border-radius", "5px");
+
+  legendDiv.append("h2").text("Legend").style("color", "white").style("margin", "0 0 10px 0");
+
+  const colorLegend = legendDiv
     .selectAll(".color-legend")
     .data(GENRES.slice(0, 5))
     .enter()
@@ -84,6 +95,7 @@ const createLegend = (
 
   colorLegend
     .append("span")
+    .style("color", "white")
     .style("margin-left", "5px")
     .text((d) => d.name);
 };
@@ -117,7 +129,10 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
     createLegend(ref.current, colorScale);
   }, []);
 
-  return <div ref={ref}></div>;
+  return (
+    <div ref={ref} style={{ position: "relative" }}>
+    </div>
+  );
 };
 
 export default SpiderChart;
