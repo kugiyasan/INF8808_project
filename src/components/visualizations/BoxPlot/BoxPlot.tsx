@@ -122,7 +122,7 @@ const BoxPlotD3: React.FC<BoxPlotD3Props> = ({ data, genres }) => {
   }, [data, genres]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '2%' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '5%' }}>
       <svg
         ref={svgRef}
         width={800}
