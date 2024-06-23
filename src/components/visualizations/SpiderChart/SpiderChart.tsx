@@ -112,16 +112,16 @@ const createLegend = (
 const SpiderChart: FC<SpiderChartProps> = ({ dataset, selectedGenres }) => {
   const ref = useRef<HTMLInputElement>(null);
 
-  const { data, genres } = getSpiderChartData(dataset);
-  const d: SpiderChartData = [];
-  for (const genre of selectedGenres) {
-    const i = genres.indexOf(genre);
-    d.push(data[i]);
-  }
-
   useEffect(() => {
     if (selectedGenres.length <= 0) {
       return;
+    }
+
+    const { data, genres } = getSpiderChartData(dataset);
+    const d: SpiderChartData = [];
+    for (const genre of selectedGenres) {
+      const i = genres.indexOf(genre);
+      d.push(data[i]);
     }
 
     const margin = { top: 100, right: 100, bottom: 100, left: 100 };

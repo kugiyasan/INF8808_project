@@ -289,9 +289,9 @@ function RadarChart(
     .attr("cy", function (d, i) {
       return rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2);
     })
-    .style("fill", function (d, i, j) {
+    .style("fill", function () {
       return d3.select(this.parentNode).select(".radarArea").style("fill");
-    })    
+    })
     .style("fill-opacity", 0.8);
 
   // Wrapper for the invisible circles on top

@@ -76,17 +76,18 @@ const getHeatmapCorrelation = (
 };
 
 const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset }) => {
-  const margin = { top: 100, right: 100, bottom: 100, left: 100 };
-  const width =
-    Math.min(700, window.innerWidth - 10) - margin.left - margin.right;
-  const height = Math.min(
-    width,
-    window.innerHeight - margin.top - margin.bottom - 20,
-  );
   const { data, genres } = getHeatmapCorrelation(dataset);
 
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    const margin = { top: 100, right: 100, bottom: 100, left: 100 };
+    const width =
+      Math.min(700, window.innerWidth - 10) - margin.left - margin.right;
+    const height = Math.min(
+      width,
+      window.innerHeight - margin.top - margin.bottom - 20,
+    );
+
     d3.select(ref.current).selectAll("*").remove();
     const svg = d3
       .select(ref.current)
@@ -143,7 +144,7 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset }) => {
       .style("stroke", "none");
 
     createLegend();
-  }, [data, genres, height, margin, width]);
+  }, [data, genres]);
 
   const createLegend = () => {
     const legendContainer = d3.select(ref.current);

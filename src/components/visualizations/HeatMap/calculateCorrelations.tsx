@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 import { Entry } from "../../../dataset";
-import { FACTORS } from "../../sections/heatmap-section/heatmap-section";
+import { FACTORS } from "../../sections/heatmap-section/factors";
 
 export const calculateCorrelations = (data: Entry[]) => {
   const factors = FACTORS.map((factor) => factor.name) as (keyof Entry)[];

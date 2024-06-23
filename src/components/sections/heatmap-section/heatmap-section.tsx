@@ -2,27 +2,11 @@ import React, { useState } from "react";
 import Dropdown, { DropdownItem } from "../../Dropdown/dropdown";
 import HeatmapD3 from "../../visualizations/HeatMap/HeatMap";
 import { Entry } from "../../../dataset";
+import { FACTORS } from "./factors";
 
 interface HeatmapSectionProps {
   dataset: Entry[];
 }
-
-// Only include the 13 factors present in the heatmap image
-export const FACTORS = [
-  { name: "popularity" },
-  { name: "duration_ms" },
-  { name: "danceability" },
-  { name: "energy" },
-  { name: "loudness" },
-  { name: "mode" },
-  { name: "speechiness" },
-  { name: "acousticness" },
-  { name: "instrumentalness" },
-  { name: "liveness" },
-  { name: "valence" },
-  { name: "tempo" },
-  { name: "time_signature" },
-];
 
 const HeatmapSection: React.FC<HeatmapSectionProps> = () => {
   const preSelected: DropdownItem[] = [
@@ -46,7 +30,7 @@ const HeatmapSection: React.FC<HeatmapSectionProps> = () => {
 
   return (
     <>
-      <h2>Heatmap</h2>
+      <h2>Louder = more energy! (and other fun facts about songs&apos; characteristics)</h2>
       <Dropdown
         onUpdate={setFactors}
         options={FACTORS}
