@@ -4,12 +4,14 @@ import { Entry } from "../../../dataset";
 
 interface HeatmapProps {
   dataset: Entry[];
+  genresSelected: string[];
 }
 
 type HeatmapData = { axis: string; correlation: number }[][];
 
 const getHeatmapCorrelation = (
   dataset: Entry[],
+  genresSelected: string[],
 ): { data: HeatmapData; genres: string[] } => {
   const spokeLabels = [
     "popularity",
@@ -38,7 +40,10 @@ const getHeatmapCorrelation = (
   const data: HeatmapData = [];
   const genres: string[] = [];
 
-  for (const [genre, group] of Object.entries(groupByGenre)) {
+  for (const genre of genresSelected) {
+    const group = groupByGenre[genre];
+    if (!group) continue;
+
     const entry: { axis: string; correlation: number }[] = [];
 
     const popularityValues = group.map((row) => Number(row.popularity));
@@ -75,18 +80,20 @@ const getHeatmapCorrelation = (
   return { data, genres };
 };
 
-const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset }) => {
-  const { data, genres } = getHeatmapCorrelation(dataset);
+const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset, genresSelected }) => {
+  const { data, genres } = getHeatmapCorrelation(dataset, genresSelected);
 
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const margin = { top: 100, right: 100, bottom: 100, left: 100 };
+    if (!data.length || !data[0]) return;
+
+    const margin = { top: 50, right: 50, bottom: 50, left: 50 }; // Adjusted margins
     const width =
-      Math.min(700, window.innerWidth - 10) - margin.left - margin.right;
+      Math.min(1300, window.innerWidth - 10) - margin.left - margin.right; // Increased width
     const height = Math.min(
-      width,
+      500,
       window.innerHeight - margin.top - margin.bottom - 20,
-    );
+    ); // Adjusted height to match increased width
 
     d3.select(ref.current).selectAll("*").remove();
     const svg = d3
@@ -100,13 +107,13 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset }) => {
     const xScale = d3
       .scaleBand()
       .range([0, width])
-      .domain(data[0].map((d) => d.axis))
+      .domain(genres)
       .padding(0.01);
 
     const yScale = d3
       .scaleBand()
       .range([height, 0])
-      .domain(genres)
+      .domain(data[0].map((d) => d.axis))
       .padding(0.01);
 
     const colorScale = d3
@@ -135,8 +142,8 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset }) => {
       .data(flattenedData)
       .enter()
       .append("rect")
-      .attr("x", (d) => xScale(d.axis)!)
-      .attr("y", (d) => yScale(d.genre)!)
+      .attr("x", (d) => xScale(d.genre)!)
+      .attr("y", (d) => yScale(d.axis)!)
       .attr("width", xScale.bandwidth())
       .attr("height", yScale.bandwidth())
       .style("fill", (d) => colorScale(d.value))
