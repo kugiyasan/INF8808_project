@@ -84,6 +84,7 @@ const ScatterPlot: React.FC<ScatterPlotProps> = ({
           "transform",
           `translate(${width / 2}, ${height + margin.bottom - 10})`,
         )
+        .attr("fill", "white")
         .style("text-anchor", "middle")
         .text(xAxis.charAt(0).toUpperCase() + xAxis.slice(1));
 
@@ -93,6 +94,7 @@ const ScatterPlot: React.FC<ScatterPlotProps> = ({
         .attr("transform", "rotate(-90)")
         .attr("x", -height / 2)
         .attr("y", -margin.left + 15)
+        .attr("fill", "white")
         .style("text-anchor", "middle")
         .text(yAxis.charAt(0).toUpperCase() + yAxis.slice(1));
 

@@ -76,8 +76,9 @@ const ScatterPlotSection: React.FC<ScatterPlotSectionProps> = ({ dataset }) => {
         <Dropdown
           onUpdate={handleGenreSelection}
           options={genreOptions}
-          placeholder="Select Genres"
+          placeholder="Select up to 5 genres"
           preSelected={selectedGenres.map((genre) => ({ name: genre }))}
+          limit={5}
         />
       </div>
       <div className="scatterplot-container">

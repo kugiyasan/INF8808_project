@@ -17,7 +17,7 @@ const buildHeatmap = (
   correlations: Correlation[],
   factors: string[],
 ) => {
-  const margin = { top: 50, right: 50, bottom: 100, left: 100 };
+  const margin = { top: 16, right: 50, bottom: 180, left: 100 };
   const width = 700 - margin.left - margin.right;
   const height = 700 - margin.top - margin.bottom;
 
