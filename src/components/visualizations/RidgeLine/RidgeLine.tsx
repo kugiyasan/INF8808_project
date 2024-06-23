@@ -21,9 +21,9 @@ const RidgelinePlot: React.FC<RidgelinePlotProps> = ({
   const xAxisRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
-    const margin = { top: 60, right: 30, bottom: 60, left: 110 },
-      width = 800 - margin.left - margin.right,
-      height = 200 - margin.top - margin.bottom; // Adjust height to fit multiple graphs
+    const margin = { top: 0, right: 30, bottom: 60, left: 110 };
+    const width = 800 - margin.left - margin.right;
+    const height = 180 - margin.top - margin.bottom; // Adjust height to fit multiple graphs
 
     const x = d3.scaleLinear().domain([0, 100]).range([0, width]);
 
@@ -45,6 +45,7 @@ const RidgelinePlot: React.FC<RidgelinePlotProps> = ({
       const svg = d3
         .select(chartRefs.current[index])
         .attr("width", width + margin.left + margin.right)
+        .attr("height", height)
         .html("") // Clear previous contents
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
@@ -83,8 +84,9 @@ const RidgelinePlot: React.FC<RidgelinePlotProps> = ({
       svg
         .append("text")
         .attr("x", width / 2)
-        .attr("y", 0 - margin.top / 2)
+        .attr("y", 30)
         .attr("text-anchor", "middle")
+        .attr("fill", "white")
         .style("font-size", "16px")
         .text(genre);
 

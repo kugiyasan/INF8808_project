@@ -30,7 +30,7 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
 
   return (
     <>
-      <h2>Selected Genres: {selectedGenres.join(", ")}</h2>
+      <h2>Popularity distribution per genre</h2>
       <Dropdown
         onUpdate={handleUpdateGenres}
         options={GENRES}
