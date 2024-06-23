@@ -7,7 +7,7 @@ export interface DropdownItem {
 }
 
 interface DropdownProps {
-  options: object[];
+  options: DropdownItem[];
   onUpdate: (selected: string[]) => void;
   placeholder?: string;
   limit?: number;

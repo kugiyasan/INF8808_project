@@ -55,7 +55,6 @@ const BoxPlotD3: React.FC<BoxPlotD3Props> = ({ data, genres }) => {
     const boxPlotData = getBoxPlotData(data, genres);
 
     const x = d3.scaleBand().domain(genres).range([0, width]).padding(0.2);
-
     const y = d3.scaleLinear().domain([0, 1]).nice().range([height, 0]);
 
     svg

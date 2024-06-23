@@ -1,38 +1,33 @@
-import React, { useEffect, useState } from "react";
+import { FC, useState } from "react";
 import Dropdown from "../../Dropdown/dropdown";
 import BoxPlotD3 from "../../visualizations/BoxPlot/BoxPlot";
 import { Entry } from "../../../dataset";
+import { GENRES } from "../../../genres";
 
 interface BoxPlotSectionProps {
   dataset: Entry[];
 }
 
-const BoxPlotSection: React.FC<BoxPlotSectionProps> = ({ dataset }) => {
-  const [genres, setGenres] = useState<string[]>([]);
-  const [options, setOptions] = useState<{ name: string }[]>([]);
-
-  useEffect(() => {
-    if (dataset) {
-      const uniqueGenres = Array.from(
-        new Set(dataset.map((track) => track.track_genre)),
-      );
-      setOptions(uniqueGenres.map((genre) => ({ name: genre })));
-    }
-  }, [dataset]);
-
-  const handleGenreSelection = (selectedGenres: string[]) => {
-    if (selectedGenres.length <= 10) {
-      setGenres(selectedGenres);
-    }
-  };
+const BoxPlotSection: FC<BoxPlotSectionProps> = ({ dataset }) => {
+  const preSelected = [
+    { name: "rock" },
+    { name: "pop" },
+    { name: "hip-hop" },
+    { name: "jazz" },
+    { name: "classical" },
+  ];
+  const [genres, setGenres] = useState<string[]>(
+    preSelected.map((genre) => genre.name),
+  );
 
   return (
     <>
-      <h2>Genres: {genres.join(", ")}</h2>
+      <h2>Which genre is the most suitable to dance on 💃🕺</h2>
       <Dropdown
-        onUpdate={handleGenreSelection}
-        options={options}
+        onUpdate={setGenres}
+        options={GENRES}
         placeholder="Select up to 10 genres"
+        preSelected={preSelected}
         limit={10}
       />
       <div className="boxplot-container">
