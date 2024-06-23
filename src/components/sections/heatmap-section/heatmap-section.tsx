@@ -8,7 +8,7 @@ interface HeatmapSectionProps {
 }
 
 // Only include the 13 factors present in the heatmap image
-const options = [
+export const FACTORS = [
   { name: "popularity" },
   { name: "duration_ms" },
   { name: "danceability" },
@@ -24,21 +24,21 @@ const options = [
   { name: "time_signature" },
 ];
 
-const HeatmapSection: React.FC<HeatmapSectionProps> = ({ dataset }) => {
+const HeatmapSection: React.FC<HeatmapSectionProps> = () => {
   const preSelected: DropdownItem[] = [
-    // { name: "popularity" },
-    // { name: "duration_ms" },
-    // { name: "danceability" },
-    // { name: "energy" },
-    // { name: "loudness" },
-    // { name: "mode" },
-    // { name: "speechiness" },
-    // { name: "acousticness" },
-    // { name: "instrumentalness" },
-    // { name: "liveness" },
-    // { name: "valence" },
-    // { name: "tempo" },
-    // { name: "time_signature" },
+    { name: "popularity" },
+    { name: "duration_ms" },
+    { name: "danceability" },
+    { name: "energy" },
+    { name: "loudness" },
+    { name: "mode" },
+    { name: "speechiness" },
+    { name: "acousticness" },
+    { name: "instrumentalness" },
+    { name: "liveness" },
+    { name: "valence" },
+    { name: "tempo" },
+    { name: "time_signature" },
   ];
   const [factors, setFactors] = useState<string[]>(
     preSelected.map((e) => e.name),
@@ -49,12 +49,12 @@ const HeatmapSection: React.FC<HeatmapSectionProps> = ({ dataset }) => {
       <h2>Heatmap</h2>
       <Dropdown
         onUpdate={setFactors}
-        options={options}
+        options={FACTORS}
         preSelected={preSelected}
         placeholder="Select up to 13 factors"
         limit={13}
       />
-      <HeatmapD3 data={dataset} factors={factors} />
+      <HeatmapD3 factors={factors} />
     </>
   );
 };
