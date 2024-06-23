@@ -22,7 +22,7 @@ const SpiderSection: React.FC<SpiderSectionProps> = ({ dataset }) => {
 
   return (
     <>
-      <h2>Comparison of various songs' stats by genre</h2>
+      <h2>Comparison of various songs&apos; stats by genre</h2>
       <Dropdown
         onUpdate={setGenres}
         options={GENRES}
