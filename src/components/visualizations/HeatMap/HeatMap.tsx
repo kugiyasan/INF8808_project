@@ -73,7 +73,6 @@ const buildHeatmap = (
 
 const HeatmapD3: React.FC<HeatmapD3Props> = ({ factors }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
-
   const [correlations, setCorrelations] = useState<Correlation[]>();
 
   useEffect(() => {
@@ -93,6 +92,10 @@ const HeatmapD3: React.FC<HeatmapD3Props> = ({ factors }) => {
     );
     buildHeatmap(svgRef, c, factors);
   }, [factors]);
+
+  if (factors.length < 1) {
+    return <svg width="700" height="700"></svg>;
+  }
 
   return <svg ref={svgRef} width="700" height="700"></svg>;
 };
