@@ -75,9 +75,11 @@ const HeatmapD3: React.FC<HeatmapD3Props> = ({ factors }) => {
   const [correlations, setCorrelations] = useState<Correlation[]>();
 
   useEffect(() => {
-    d3.json("./heatmap.json").then((c) => {
-      setCorrelations(c as Correlation[]);
-    });
+    d3.json("./heatmap.json")
+      .then((c) => {
+        setCorrelations(c as Correlation[]);
+      })
+      .catch(console.error);
   }, []);
 
   useEffect(() => {
@@ -90,7 +92,7 @@ const HeatmapD3: React.FC<HeatmapD3Props> = ({ factors }) => {
         factors.includes(entry.factor1) && factors.includes(entry.factor2),
     );
     buildHeatmap(svgRef, c, factors);
-  }, [factors]);
+  }, [correlations, factors]);
 
   if (factors.length < 1) {
     return <svg width="700" height="700"></svg>;

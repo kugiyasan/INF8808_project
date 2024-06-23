@@ -2,7 +2,6 @@ import { CSSProperties, FC, useEffect, useRef } from "react";
 import RadarChart from "./RadarChart";
 import * as d3 from "d3";
 import { Entry } from "../../../dataset";
-import { GENRES } from "../../../genres";
 
 interface SpiderChartProps {
   dataset: Entry[];
@@ -111,13 +110,7 @@ const createLegend = (
 };
 
 const SpiderChart: FC<SpiderChartProps> = ({ dataset, selectedGenres }) => {
-  const margin = { top: 100, right: 100, bottom: 100, left: 100 };
-  const width =
-    Math.min(700, window.innerWidth - 10) - margin.left - margin.right;
-  const height = Math.min(
-    width,
-    window.innerHeight - margin.top - margin.bottom - 20,
-  );
+  const ref = useRef<HTMLInputElement>(null);
 
   const { data, genres } = getSpiderChartData(dataset);
   const d: SpiderChartData = [];
@@ -126,13 +119,20 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset, selectedGenres }) => {
     d.push(data[i]);
   }
 
-  const ref = useRef<HTMLInputElement>(null);
-  const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-
   useEffect(() => {
     if (selectedGenres.length <= 0) {
       return;
     }
+
+    const margin = { top: 100, right: 100, bottom: 100, left: 100 };
+    const width =
+      Math.min(700, window.innerWidth - 10) - margin.left - margin.right;
+    const height = Math.min(
+      width,
+      window.innerHeight - margin.top - margin.bottom - 20,
+    );
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
     const radarChartOptions = {
       w: width,
