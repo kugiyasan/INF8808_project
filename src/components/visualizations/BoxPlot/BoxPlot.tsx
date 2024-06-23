@@ -48,7 +48,7 @@ const BoxPlotD3: React.FC<BoxPlotD3Props> = ({ data, genres }) => {
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove(); // Clear previous content
 
-    const margin = { top: 20, right: 30, bottom: 40, left: 40 };
+    const margin = { top: 40, right: 30, bottom: 40, left: 40 };
     const width = 800 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
 
@@ -122,12 +122,14 @@ const BoxPlotD3: React.FC<BoxPlotD3Props> = ({ data, genres }) => {
   }, [data, genres]);
 
   return (
-    <svg
-      ref={svgRef}
-      width={800}
-      height={400}
-      style={{ backgroundColor: "#00cc66" }}
-    ></svg>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '2%' }}>
+      <svg
+        ref={svgRef}
+        width={800}
+        height={400}
+        style={{ backgroundColor: "#00cc66" }}
+      ></svg>
+    </div>
   );
 };
 
