@@ -290,8 +290,8 @@ function RadarChart(
       return rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2);
     })
     .style("fill", function (d, i, j) {
-      return cfg.color(j);
-    })
+      return d3.select(this.parentNode).select(".radarArea").style("fill");
+    })    
     .style("fill-opacity", 0.8);
 
   // Wrapper for the invisible circles on top
