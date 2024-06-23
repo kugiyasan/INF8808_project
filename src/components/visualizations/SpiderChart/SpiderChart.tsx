@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { CSSProperties, FC, useEffect, useRef } from "react";
 import RadarChart from "./RadarChart";
 import * as d3 from "d3";
 import { Entry } from "../../../dataset";
@@ -6,9 +6,14 @@ import { GENRES } from "../../../genres";
 
 interface SpiderChartProps {
   dataset: Entry[];
+  selectedGenres: string[];
 }
 
-type SpiderChartData = { axis: string; value: number }[][];
+interface AxisValue {
+  axis: string;
+  value: number;
+}
+type SpiderChartData = AxisValue[][];
 
 const getSpiderChartData = (
   dataset: Entry[],
@@ -56,6 +61,7 @@ const getSpiderChartData = (
 const createLegend = (
   currentRef: HTMLInputElement | null,
   colorScale: d3.ScaleOrdinal<string, string>,
+  selectedGenres: string[],
 ) => {
   const legendContainer = d3.select(currentRef);
 
@@ -71,11 +77,15 @@ const createLegend = (
     .style("padding", "10px")
     .style("border-radius", "5px");
 
-  legendDiv.append("h2").text("Legend").style("color", "white").style("margin", "0 0 10px 0");
+  legendDiv
+    .append("h2")
+    .text("Legend")
+    .style("color", "white")
+    .style("margin", "0 0 10px 0");
 
   const colorLegend = legendDiv
     .selectAll(".color-legend")
-    .data(GENRES.slice(0, 5))
+    .data(selectedGenres)
     .enter()
     .append("div")
     .attr("class", "color-legend")
@@ -97,10 +107,10 @@ const createLegend = (
     .append("span")
     .style("color", "white")
     .style("margin-left", "5px")
-    .text((d) => d.name);
+    .text((d) => d);
 };
 
-const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
+const SpiderChart: FC<SpiderChartProps> = ({ dataset, selectedGenres }) => {
   const margin = { top: 100, right: 100, bottom: 100, left: 100 };
   const width =
     Math.min(700, window.innerWidth - 10) - margin.left - margin.right;
@@ -110,11 +120,20 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
   );
 
   const { data, genres } = getSpiderChartData(dataset);
+  const d: SpiderChartData = [];
+  for (const genre of selectedGenres) {
+    const i = genres.indexOf(genre);
+    d.push(data[i]);
+  }
 
   const ref = useRef<HTMLInputElement>(null);
   const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
   useEffect(() => {
+    if (selectedGenres.length <= 0) {
+      return;
+    }
+
     const radarChartOptions = {
       w: width,
       h: height,
@@ -125,14 +144,21 @@ const SpiderChart: FC<SpiderChartProps> = ({ dataset }) => {
       color: colorScale,
     };
 
-    RadarChart(ref.current, data.slice(0, 5), radarChartOptions);
-    createLegend(ref.current, colorScale);
-  }, []);
+    RadarChart(ref.current, d, radarChartOptions);
+    createLegend(ref.current, colorScale, selectedGenres);
+  }, [selectedGenres]);
 
-  return (
-    <div ref={ref} style={{ position: "relative" }}>
-    </div>
-  );
+  if (selectedGenres.length <= 0) {
+    const style: CSSProperties = {
+      width: "700px",
+      height: "700px",
+      alignContent: "center",
+      textAlign: "center",
+    };
+    return <h1 style={style}>Select at least one genre!</h1>;
+  }
+
+  return <div ref={ref} style={{ position: "relative" }}></div>;
 };
 
 export default SpiderChart;

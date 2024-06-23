@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import SpiderChart from "../../visualizations/SpiderChart/SpiderChart";
 import Dropdown from "../../Dropdown/dropdown";
 import { GENRES } from "../../../genres";
@@ -9,19 +9,28 @@ interface SpiderSectionProps {
 }
 
 const SpiderSection: React.FC<SpiderSectionProps> = ({ dataset }) => {
-  const [genre, setGenre] = React.useState<string[]>([]);
+  const preSelected = [
+    { name: "rock" },
+    { name: "pop" },
+    { name: "hip-hop" },
+    { name: "jazz" },
+    { name: "classical" },
+  ];
+  const [genres, setGenres] = useState<string[]>(
+    preSelected.map((genre) => genre.name),
+  );
+
   return (
     <>
-      <h2>{genre}</h2>
+      <h2>Comparison of various songs' stats by genre</h2>
       <Dropdown
-        onUpdate={setGenre}
+        onUpdate={setGenres}
         options={GENRES}
         placeholder={"Select up to 5 genres"}
+        preSelected={preSelected}
         limit={5}
       />
-      <div className="visual-container">
-        <SpiderChart dataset={dataset} />
-      </div>
+      <SpiderChart dataset={dataset} selectedGenres={genres}/>
     </>
   );
 };

@@ -91,17 +91,6 @@ function RadarChart(
     .attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
     .attr("class", "radar" + id);
 
-  // Add the title
-  svg
-    .append("text")
-    .attr("x", cfg.w / 2 + cfg.margin.left)
-    .attr("y", cfg.margin.top - 80)
-    .attr("text-anchor", "middle")
-    .attr("fill", "white")
-    .style("font-size", "24px")
-    .style("font-weight", "bold")
-    .text("Comparison of various songs' stats by genre");
-
   //Append a g element
   const g = svg
     .append("g")

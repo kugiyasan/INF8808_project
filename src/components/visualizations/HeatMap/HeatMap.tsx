@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { Entry } from "../../../dataset";
-import { calculateCorrelations } from "./calculateCorrelations";
 
 interface Correlation {
   factor1: keyof Entry;
