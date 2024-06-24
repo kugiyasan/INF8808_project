@@ -9,9 +9,7 @@ interface CorrelationSectionProps {
 }
 
 const CorrelationSection: FC<CorrelationSectionProps> = ({ dataset }) => {
-  const [genres, setGenres] = useState<string[]>([
-    'K-Pop', 'Pop', 'Hip-Hop', 'Jazz', 'Classical', 'Electronic', 'R&B', 'Country', 'Folk', 'Reggae', 'Blues', 'Metal', 'Punk', 'Disco', 'Soul', 'Funk', 'Techno', 'House', 'Dance', 'Trance', 'Dubstep', 'Drum and Bass'
-  ]);
+  const [genres, setGenres] = useState<string[]>(['anime', 'k-pop', 'pop', 'hip-hop', 'jazz']);
 
   return (
     <>
@@ -20,7 +18,7 @@ const CorrelationSection: FC<CorrelationSectionProps> = ({ dataset }) => {
         onUpdate={setGenres}
         options={GENRES}
         placeholder="Select up to 10 genres"
-        preSelected={[]}
+        preSelected={['anime', 'k-pop', 'pop', 'hip-hop', 'jazz'].map((genre) => ({ name: genre }))}
         limit={10}
       />
       <div className="correlation-container">
