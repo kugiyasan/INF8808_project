@@ -10,14 +10,16 @@ interface Correlation {
 
 interface HeatmapD3Props {
   factors: string[];
+  onHover: (metric: string) => void;
 }
 
 const buildHeatmap = (
   svgRef: React.MutableRefObject<SVGSVGElement | null>,
   correlations: Correlation[],
   factors: string[],
+  onHover: (metric: string) => void
 ) => {
-  const margin = { top: 16, right: 50, bottom: 180, left: 100 };
+  const margin = { top: 10, right: 50, bottom: 320, left: 100 };
   const width = 700 - margin.left - margin.right;
   const height = 700 - margin.top - margin.bottom;
 
@@ -27,7 +29,7 @@ const buildHeatmap = (
   const color = d3.scaleSequential(d3.interpolateRdBu).domain([-1, 1]);
 
   const svg = d3.select(svgRef.current);
-  svg.selectAll("*").remove(); // Clear previous content
+  svg.selectAll("*").remove();
 
   const svgElement = svg
     .append("g")
@@ -42,17 +44,32 @@ const buildHeatmap = (
     .attr("x", 9)
     .attr("y", 0)
     .attr("dy", ".35em")
-    .style("text-anchor", "start");
+    .style("text-anchor", "start")
+    .on("mouseover", function (event, d) {
+      onHover(d as string);
+    })
+    .on("mouseout", function () {
+      onHover("");
+    });
 
-  svgElement.append("g").call(d3.axisLeft(y));
+  svgElement
+    .append("g")
+    .call(d3.axisLeft(y))
+    .selectAll("text")
+    .on("mouseover", function (event, d) {
+      onHover(d as string);
+    })
+    .on("mouseout", function () {
+      onHover("");
+    });
 
   svgElement
     .selectAll()
     .data(correlations)
     .enter()
     .append("rect")
-    .attr("x", (d) => x(d.factor1)!)
-    .attr("y", (d) => y(d.factor2)!)
+    .attr("x", (d) => x(d.factor1 as string)!)
+    .attr("y", (d) => y(d.factor2 as string)!)
     .attr("width", x.bandwidth())
     .attr("height", y.bandwidth())
     .style("fill", (d) => color(d.value));
@@ -62,15 +79,15 @@ const buildHeatmap = (
     .data(correlations)
     .enter()
     .append("text")
-    .attr("x", (d) => x(d.factor1)! + x.bandwidth() / 2)
-    .attr("y", (d) => y(d.factor2)! + y.bandwidth() / 2)
+    .attr("x", (d) => x(d.factor1 as string)! + x.bandwidth() / 2)
+    .attr("y", (d) => y(d.factor2 as string)! + y.bandwidth() / 2)
     .attr("dy", ".35em")
     .attr("text-anchor", "middle")
     .text((d) => d.value.toFixed(2))
     .style("fill", "black");
 };
 
-const HeatmapD3: React.FC<HeatmapD3Props> = ({ factors }) => {
+const HeatmapD3: React.FC<HeatmapD3Props> = ({ factors, onHover }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const [correlations, setCorrelations] = useState<Correlation[]>();
 
@@ -89,10 +106,11 @@ const HeatmapD3: React.FC<HeatmapD3Props> = ({ factors }) => {
 
     const c = correlations.filter(
       (entry) =>
-        factors.includes(entry.factor1) && factors.includes(entry.factor2),
+        factors.includes(entry.factor1 as string) &&
+        factors.includes(entry.factor2 as string)
     );
-    buildHeatmap(svgRef, c, factors);
-  }, [correlations, factors]);
+    buildHeatmap(svgRef, c, factors, onHover);
+  }, [correlations, factors, onHover]);
 
   if (factors.length < 1) {
     return <svg width="700" height="700"></svg>;
