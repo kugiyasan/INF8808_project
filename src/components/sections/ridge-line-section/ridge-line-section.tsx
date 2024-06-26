@@ -1,8 +1,8 @@
 import Dropdown from "../../Dropdown/dropdown";
+import { Entry } from "../../../dataset";
+import { GENRES } from "../../../genres";
 import React from "react";
 import RidgelinePlot from "../../visualizations/RidgeLine/RidgeLine";
-import { GENRES } from "../../../genres";
-import { Entry } from "../../../dataset";
 
 interface RidgeLineSectionProps {
   dataset: Entry[];
@@ -17,10 +17,9 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
     { name: "classical" },
   ];
   const [selectedGenres, setSelectedGenres] = React.useState<string[]>(
-    preSelectedOptions.map((genre) => genre.name.toLowerCase()),
+    preSelectedOptions.map((genre) => genre.name.toLowerCase())
   );
-  // const [kernelBandwidth, setKernelBandwidth] = React.useState<number>(7);
-  // const [numTicks, setNumTicks] = React.useState<number>(40);
+
   const kernelBandwidth = 7;
   const numTicks = 40;
 
@@ -38,29 +37,6 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
         limit={5}
         preSelected={preSelectedOptions}
       />
-
-      {/* <div>
-                <label>
-                    Kernel Bandwidth:
-                    <input
-                        type="number"
-                        value={kernelBandwidth}
-                        onChange={(e) => setKernelBandwidth(Number(e.target.value))}
-                        min="1"
-                        max="20"
-                    />
-                </label>
-                <label>
-                    Number of Ticks:
-                    <input
-                        type="number"
-                        value={numTicks}
-                        onChange={(e) => setNumTicks(Number(e.target.value))}
-                        min="10"
-                        max="100"
-                    />
-                </label>
-            </div> */}
 
       <div className="visual-container">
         <RidgelinePlot
