@@ -1,14 +1,14 @@
+import BoxPlotExplicit from "../../visualizations/BoxPlotExplicit/BoxPlotExplicit";
 import Dropdown from "../../Dropdown/dropdown";
 import { Entry } from "../../../dataset";
 import { GENRES } from "../../../genres";
 import React from "react";
-import RidgelinePlot from "../../visualizations/RidgeLine/RidgeLine";
 
-interface RidgeLineSectionProps {
+interface BoxPlotSectionProps {
   dataset: Entry[];
 }
 
-const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
+const BoxPlotSection: React.FC<BoxPlotSectionProps> = ({ dataset }) => {
   const preSelectedOptions = [
     { name: "rock" },
     { name: "pop" },
@@ -20,16 +20,13 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
     preSelectedOptions.map((genre) => genre.name.toLowerCase())
   );
 
-  const kernelBandwidth = 7;
-  const numTicks = 40;
-
   const handleUpdateGenres = (selected: string[]) => {
     setSelectedGenres(selected.map((genre) => genre.toLowerCase()));
   };
 
   return (
     <>
-      <h2>What is the distribution of popularity scores for different genres?</h2>
+      <h2>What is the impact of explicit lyrics on track popularity?</h2>
       <Dropdown
         onUpdate={handleUpdateGenres}
         options={GENRES}
@@ -37,17 +34,11 @@ const RidgeLineSection: React.FC<RidgeLineSectionProps> = ({ dataset }) => {
         limit={5}
         preSelected={preSelectedOptions}
       />
-
       <div className="visual-container">
-        <RidgelinePlot
-          data={dataset}
-          selectedGenres={selectedGenres}
-          kernelBandwidth={kernelBandwidth}
-          numTicks={numTicks}
-        />
+        <BoxPlotExplicit data={dataset} genres={selectedGenres} />
       </div>
     </>
   );
 };
 
-export default RidgeLineSection;
+export default BoxPlotSection;

@@ -5,14 +5,15 @@ import * as d3 from "d3";
 import { Entry, preprocessDataset } from "./dataset";
 import { useEffect, useState } from "react";
 
+import BoxPlotSection from "./components/sections/boxplot-section/boxplot-section.tsx";
+import BoxPlotSection2 from "./components/sections/boxplot-section-explicit/boxplot-section-explicit.tsx";
+import CorrelationSection from "./components/sections/correlation-section/heatmap-section.tsx";
 import Footer from "./components/sections/footer-section/footer.tsx";
+import HeatmapSection from "./components/sections/heatmap-section/heatmap-section.tsx";
 import Introduction from "./components/sections/introduction-section/introduction.tsx";
 import RidgeLineSection from "./components/sections/ridge-line-section/ridge-line-section.tsx";
-import SpiderSection from "./components/sections/spider-section/spider-section.tsx";
-import BoxPlotSection from "./components/sections/boxplot-section/boxplot-section.tsx";
-import HeatmapSection from "./components/sections/heatmap-section/heatmap-section.tsx";
-import CorrelationSection from "./components/sections/correlation-section/heatmap-section.tsx";
 import ScatterPlotSection from "./components/sections/scatterplot-section/scatterplot-section.tsx";
+import SpiderSection from "./components/sections/spider-section/spider-section.tsx";
 
 function App() {
   const [track, setTrack] = useState(
@@ -57,6 +58,9 @@ function App() {
       </div>
       <div className="section">
         <RidgeLineSection dataset={dataset} />
+      </div>
+      <div className="section">
+        <BoxPlotSection2 dataset={dataset} />
       </div>
       <div className="section">
         <CorrelationSection dataset={dataset} />
