@@ -116,9 +116,10 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset, genresSelected }) => {
       .domain(data[0].map((d) => d.axis))
       .padding(0.01);
 
-    const colorScale = d3
-      .scaleSequential(d3.interpolateInferno)
-      .domain([-1, 1]);
+    // Define a custom color scale
+    const colorScale = d3.scaleLinear<string>()
+      .domain([-1, 0, 1])
+      .range(["green", "white", "red"]);
 
     svg
       .append("g")
@@ -155,7 +156,7 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset, genresSelected }) => {
 
   const createLegend = (
     svg: d3.Selection<SVGGElement, unknown, null, any>,
-    colorScale: d3.ScaleSequential<string>,
+    colorScale: d3.ScaleLinear<string, string>,
     width: number,
   ) => {
     const legendContainer = svg.append("g")
@@ -197,14 +198,14 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset, genresSelected }) => {
       .selectAll("text")
       .style("font-size", "11px")
       .attr("dx", 6)
-      .style("fill", "white");
+      .style("fill", "black");
 
     legendContainer.append("text")
       .attr("x", 0)
       .attr("y", -12)
       .attr("text-anchor", "middle")
       .style("font-size", "20px")
-      .style("fill", "white")
+      .style("fill", "black")
       .style("font-weight", "bold")
       .text("Correlation");
   };
