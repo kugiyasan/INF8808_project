@@ -164,7 +164,7 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset, genresSelected }) => {
       .attr("transform", `translate(${width + 70}, 20)`);
 
     const legendWidth = 25;
-    const legendHeight = 250;
+    const legendHeight = 300;
 
     const legendScale = d3.scaleLinear()
       .domain([-1, 1])
@@ -197,6 +197,7 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset, genresSelected }) => {
       .call(legendAxis)
       .selectAll("text")
       .style("font-size", "11px")
+      .attr("dx", 6)
       .style("fill", "white");
 
     legendContainer.append("text")
