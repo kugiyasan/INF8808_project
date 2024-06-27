@@ -61,7 +61,14 @@ const HeatmapSection: React.FC<HeatmapSectionProps> = () => {
         placeholder="Select up to 13 factors"
         limit={13}
       />
-      <div style={{ marginTop: "20px", minHeight: "40px", color: "white" }}>
+      <div
+        style={{
+          marginTop: "20px",
+          minHeight: "40px",
+          color: "white",
+          fontWeight: "bold",
+        }}
+      >
         {metricDefinitions[hoveredMetric] ||
           "Hover over a metric to see its definition"}
       </div>
