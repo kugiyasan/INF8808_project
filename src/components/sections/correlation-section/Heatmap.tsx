@@ -150,16 +150,62 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset, genresSelected }) => {
       .style("stroke-width", 4)
       .style("stroke", "none");
 
-    createLegend();
+    createLegend(svg, colorScale, width, height);
   }, [data, genres]);
 
-  const createLegend = () => {
-    const legendContainer = d3.select(ref.current);
-    if (legendContainer.select("h2").empty()) {
-      legendContainer.append("h2").text("Legend of the correlation");
-    }
+  const createLegend = (
+    svg: d3.Selection<SVGGElement, unknown, HTMLElement, any>,
+    colorScale: d3.ScaleSequential<string>,
+    width: number,
+    height: number
+  ) => {
+    const legendContainer = svg.append("g")
+      .attr("class", "legend")
+      .attr("transform", `translate(${width + 25}, 20)`);
 
-    // TODO: add the legend
+    const legendWidth = 20;
+    const legendHeight = 250;
+
+    const legendScale = d3.scaleLinear()
+      .domain([-1, 1])
+      .range([legendHeight, 0]);
+
+    const legendAxis = d3.axisRight(legendScale)
+      .tickValues(d3.range(-1, 1.1, 0.2))
+      .tickFormat(d3.format(".1f"));
+
+    const legendGradient = legendContainer.append("defs")
+      .append("linearGradient")
+      .attr("id", "legend-gradient")
+      .attr("x1", "0%").attr("y1", "0%")
+      .attr("x2", "0%").attr("y2", "100%");
+
+    legendGradient.selectAll("stop")
+      .data(d3.ticks(-1, 1, 10))
+      .enter().append("stop")
+      .attr("offset", (d, i) => `${i * 10}%`)
+      .attr("stop-color", d => colorScale(d));
+
+    legendContainer.append("rect")
+      .attr("x", -legendWidth / 2)
+      .attr("y", 0)
+      .attr("width", legendWidth)
+      .attr("height", legendHeight)
+      .style("fill", "url(#legend-gradient)");
+
+    legendContainer.append("g")
+      .call(legendAxis)
+      .selectAll("text")
+      .style("font-size", "10px")
+      .style("fill", "white");
+
+    legendContainer.append("text")
+      .attr("x", 0)
+      .attr("y", -10)
+      .attr("text-anchor", "middle")
+      .style("font-size", "14px")
+      .style("fill", "white")
+      .text("Correlation");
   };
 
   return <div ref={ref}></div>;
