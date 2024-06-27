@@ -85,6 +85,40 @@ const buildHeatmap = (
     .attr("text-anchor", "middle")
     .text((d) => d.value.toFixed(2))
     .style("fill", "black");
+
+  const legendWidth = 300;
+  const legendHeight = 10;
+
+  const legendScale = d3.scaleLinear()
+    .domain([-1, 1])
+    .range([0, legendWidth]);
+
+  const legendAxis = d3.axisBottom(legendScale)
+    .tickValues(d3.range(-1, 1.1, 0.2))
+    .tickFormat(d3.format(".1f"));
+
+  const legend = svg.append("g")
+    .attr("class", "legend")
+    .attr("transform", `translate(${margin.left},${height + margin.top + 70})`);
+
+  const defs = svg.append("defs");
+  const linearGradient = defs.append("linearGradient")
+    .attr("id", "linear-gradient");
+
+  linearGradient.selectAll("stop")
+    .data(d3.ticks(-1, 1, 10))
+    .enter().append("stop")
+    .attr("offset", (d, i) => `${i * 10}%`)
+    .attr("stop-color", d => color(d));
+
+  legend.append("rect")
+    .attr("width", legendWidth)
+    .attr("height", legendHeight)
+    .style("fill", "url(#linear-gradient)");
+
+  legend.append("g")
+    .attr("transform", `translate(0, ${legendHeight})`)
+    .call(legendAxis);
 };
 
 const HeatmapD3: React.FC<HeatmapD3Props> = ({ factors, onHover }) => {
