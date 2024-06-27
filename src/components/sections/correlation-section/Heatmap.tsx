@@ -87,7 +87,7 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset, genresSelected }) => {
   useEffect(() => {
     if (!data.length || !data[0]) return;
 
-    const margin = { top: 50, right: 50, bottom: 50, left: 50 }; // Adjusted margins
+    const margin = { top: 50, right: 150, bottom: 50, left: 150 }; // Adjusted margins
     const width =
       Math.min(1300, window.innerWidth - 10) - margin.left - margin.right; // Increased width
     const height = Math.min(
@@ -161,9 +161,9 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset, genresSelected }) => {
   ) => {
     const legendContainer = svg.append("g")
       .attr("class", "legend")
-      .attr("transform", `translate(${width + 25}, 20)`);
+      .attr("transform", `translate(${width + 70}, 20)`);
 
-    const legendWidth = 20;
+    const legendWidth = 25;
     const legendHeight = 250;
 
     const legendScale = d3.scaleLinear()
@@ -196,15 +196,16 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset, genresSelected }) => {
     legendContainer.append("g")
       .call(legendAxis)
       .selectAll("text")
-      .style("font-size", "10px")
+      .style("font-size", "11px")
       .style("fill", "white");
 
     legendContainer.append("text")
       .attr("x", 0)
-      .attr("y", -10)
+      .attr("y", -12)
       .attr("text-anchor", "middle")
-      .style("font-size", "14px")
+      .style("font-size", "20px")
       .style("fill", "white")
+      .style("font-weight", "bold")
       .text("Correlation");
   };
 
