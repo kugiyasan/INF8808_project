@@ -11,7 +11,6 @@ interface RidgelinePlotProps {
   numTicks: number;
 }
 
-
 const RidgelinePlot: React.FC<RidgelinePlotProps> = ({
   data,
   selectedGenres,
@@ -20,7 +19,7 @@ const RidgelinePlot: React.FC<RidgelinePlotProps> = ({
 }) => {
   const chartRefs = useRef<(SVGSVGElement | null)[]>([]);
   const xAxisRef = useRef<SVGSVGElement | null>(null);
-  const scaleRef = useRef(d3.scaleLinear().domain([0, 100]).range([0, 800 - 30 - 110]));
+  const scaleRef = useRef(d3.scaleLinear().domain([0, 100]).range([0, 800]));
 
   useEffect(() => {
     const margin = { top: 0, right: 30, bottom: 60, left: 110 };
@@ -55,6 +54,14 @@ const RidgelinePlot: React.FC<RidgelinePlotProps> = ({
 
       // Define gradient
       const defs = svg.append("defs");
+
+      // Define clip path
+      defs.append("clipPath")
+        .attr("id", `clip-${index}`)
+        .append("rect")
+        .attr("width", width)
+        .attr("height", height);
+
       const gradient = defs
         .append("linearGradient")
         .attr("id", `gradient-${index}`)
@@ -88,12 +95,13 @@ const RidgelinePlot: React.FC<RidgelinePlotProps> = ({
       const y = d3.scaleLinear().domain([0, 0.08]).range([height, 0]);
 
       // Add area
-      const area = svg
+      svg
         .append("path")
         .datum(density)
         .attr("fill", `url(#gradient-${index})`)
         .attr("stroke", "#000")
         .attr("stroke-width", 1)
+        .attr("clip-path", `url(#clip-${index})`)
         .attr(
           "d",
           d3
@@ -184,31 +192,38 @@ const RidgelinePlot: React.FC<RidgelinePlotProps> = ({
         });
 
       // Zoom interaction
-      const zoom = d3.zoom<any, any>().on("zoom", (event) => {
-        const newX = event.transform.rescaleX(x);
-        scaleRef.current = newX; // Update scaleRef with new scale
-        xAxisGroup.call(d3.axisBottom(newX));
-        area.attr(
-          "d",
-          d3
-            .area()
-            .curve(d3.curveBasis)
-            .x((d) => newX(d[0]))
-            .y0(y(0))
-            .y1((d) => y(d[1]))
-        );
-      });
+      const zoom = d3.zoom<any, any>()
+        .scaleExtent([1, 10]) // Limits the zoom scale
+        .translateExtent([[0, 0], [width, height]]) // Limits the translation extent
+        .on("zoom", (event) => {
+          const newX = event.transform.rescaleX(x);
+          scaleRef.current = newX; // Update scaleRef with new scale
+          xAxisGroup.call(d3.axisBottom(newX));
+          selectedGenres.forEach((_genre, i) => {
+            const svg = d3.select(chartRefs.current[i]).select("g");
+            svg.selectAll("path").attr(
+              "d",
+              //@ts-ignore
+              d3
+                .area()
+                .curve(d3.curveBasis)
+                .x((d) => newX(d[0]))
+                .y0(y(0))
+                .y1((d) => y(d[1]))
+            );
+          });
+        });
 
       svg.call(zoom);
 
-      function kernelDensityEstimator(kernel:any, X:any) {
-        return function (V:any) {
-          return X.map((x:any) => [x, d3.mean(V, (v:any) => kernel(x - v))]);
+      function kernelDensityEstimator(kernel: any, X: any) {
+        return function (V: any) {
+          return X.map((x: any) => [x, d3.mean(V, (v: any) => kernel(x - v))]);
         };
       }
 
-      function kernelEpanechnikov(k:any) {
-        return function (v:any) {
+      function kernelEpanechnikov(k: any) {
+        return function (v: any) {
           return Math.abs((v /= k)) <= 1 ? (0.75 * (1 - v * v)) / k : 0;
         };
       }
@@ -227,4 +242,4 @@ const RidgelinePlot: React.FC<RidgelinePlotProps> = ({
   );
 };
 
-export default RidgelinePlot;
+export default RidgelinePlot
