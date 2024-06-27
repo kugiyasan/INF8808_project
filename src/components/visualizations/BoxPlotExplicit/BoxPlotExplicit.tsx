@@ -142,7 +142,7 @@ const BoxPlotExplicit: React.FC<BoxPlotD3Props> = ({ data, genres }) => {
       .enter()
       .append("rect")
       .attr("x", 0)
-      .attr("y", (d, i) => i * 20)
+      .attr("y", (_d, i) => i * 20)
       .attr("width", 18)
       .attr("height", 18)
       .style("fill", d => d.color);
@@ -152,7 +152,7 @@ const BoxPlotExplicit: React.FC<BoxPlotD3Props> = ({ data, genres }) => {
       .enter()
       .append("text")
       .attr("x", 24)
-      .attr("y", (d, i) => i * 20 + 9)
+      .attr("y", (_d, i) => i * 20 + 9)
       .attr("dy", ".35em")
       .text(d => d.label);
 

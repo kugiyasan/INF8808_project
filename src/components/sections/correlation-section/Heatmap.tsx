@@ -150,14 +150,13 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset, genresSelected }) => {
       .style("stroke-width", 4)
       .style("stroke", "none");
 
-    createLegend(svg, colorScale, width, height);
+    createLegend(svg, colorScale, width);
   }, [data, genres]);
 
   const createLegend = (
-    svg: d3.Selection<SVGGElement, unknown, HTMLElement, any>,
+    svg: d3.Selection<SVGGElement, unknown, null, any>,
     colorScale: d3.ScaleSequential<string>,
     width: number,
-    height: number
   ) => {
     const legendContainer = svg.append("g")
       .attr("class", "legend")
@@ -183,7 +182,7 @@ const CorrelationHeatmap: FC<HeatmapProps> = ({ dataset, genresSelected }) => {
     legendGradient.selectAll("stop")
       .data(d3.ticks(-1, 1, 10))
       .enter().append("stop")
-      .attr("offset", (d, i) => `${i * 10}%`)
+      .attr("offset", (_d, i) => `${i * 10}%`)
       .attr("stop-color", d => colorScale(d));
 
     legendContainer.append("rect")

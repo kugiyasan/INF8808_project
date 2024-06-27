@@ -45,7 +45,7 @@ const buildHeatmap = (
     .attr("y", 0)
     .attr("dy", ".35em")
     .style("text-anchor", "start")
-    .on("mouseover", function (event, d) {
+    .on("mouseover", function (_event, d) {
       onHover(d as string);
     })
     .on("mouseout", function () {
@@ -56,7 +56,7 @@ const buildHeatmap = (
     .append("g")
     .call(d3.axisLeft(y))
     .selectAll("text")
-    .on("mouseover", function (event, d) {
+    .on("mouseover", function (_event, d) {
       onHover(d as string);
     })
     .on("mouseout", function () {
@@ -108,7 +108,7 @@ const buildHeatmap = (
   linearGradient.selectAll("stop")
     .data(d3.ticks(-1, 1, 10))
     .enter().append("stop")
-    .attr("offset", (d, i) => `${i * 10}%`)
+    .attr("offset", (_d, i) => `${i * 10}%`)
     .attr("stop-color", d => color(d));
 
   legend.append("rect")
